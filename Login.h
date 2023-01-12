@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #define pause(); system("PAUSE"); system("CLS"); ;
 #define color(c); system("COLOR " #c);
-
 #include <stdbool.h>
 #include <string.h>
 #include <wctype.h>
 #include <ctype.h>
 
-bool VerificadorUserUser(char Usuario[10]);
-
+#define errorColor 46
+#define normalColor 30
+#define exitColor 07
+#define succesfulColor 02
 
 struct Usuario{
 	char usuario[50];
@@ -25,6 +26,8 @@ struct Entrenador{
 };
 
 
+bool VerificadorUserUser(char Usuario[10]);
+
 bool loginUser(char usuario[10], char contrasena[10])
 { 
 	//El inicio de sesion
@@ -32,8 +35,11 @@ bool loginUser(char usuario[10], char contrasena[10])
 	FILE *Users;
 	Users = fopen("Usuarios.dat", "r"); // Se abre el archivo para comprobar si ya existe el usuario
 	if(Users == NULL)
-	{ //Se comprueba que el archivo exista
+	{ 
+		//Se comprueba que el archivo exista
+		color(errorColor);
 		printf("Error al abrir el archivo");
+		color(exitColor);
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -87,17 +93,21 @@ bool VerificadorUserUser(char Usuario[50])
 	printf("Su usuario se esta verificando.");
 	if(!(strlen(Usuario) >= 6))
 	{
-		color(46); //Color de error
+		color(errorColor);
 		printf("\nError: El usuario ingresado tiene un tamano menor a 6 caracteres\n");
 		printf("Cantidad de caracteres ingresado: %i\n", strlen(Usuario));
 		pause();
+		color(normalColor);
 		return false;
 	}
-	if else(!(strlen(Usuario) <= 10)){
-		color(46); //Color de error
+	
+	else if(!(strlen(Usuario) <= 10)){
+		color(errorColor);
 		printf("\nError: El usuario ingresado tiene un tamano menor a 6 caracteres\n");
 		printf("Cantidad de caracteres ingresado: %i\n", strlen(Usuario));
 		pause();
+		color(normalColor);
+
 		return false;
 	}
 
@@ -105,10 +115,11 @@ bool VerificadorUserUser(char Usuario[50])
 	/*Comprueba si la primera letra es minuscula*/
 	if(!iswlower(Usuario[0]))
 	{
-		color(46); //Color de error
+		color(errorColor);
 		printf("\nError: El nombre ingresado no empieza con minuscula\n");
 
 		pause();
+		color(normalColor);
 		return false;
 	}
 
@@ -124,24 +135,24 @@ bool VerificadorUserUser(char Usuario[50])
 	if(!(digitos <= 3))
 	{ 
 		//Si el nombre tiene mas de 3 digitos aparece un error
-		color(46); //Color de error
+		color(errorColor);
 		printf("\nError: El nombre tiene mas de 3 digitos\n");
 		printf("Cantidad de digitos: %i\n", digitos);
 
 		pause();
-		color(30); //Color normal
+		color(normalColor);
 		return false;
 	}
 
 	if(!(May >= 2))
 	{ 
 		//Si el nombre tiene menos de 2 mayusculas aparece un error
-		color(46); //Color de error
+		color(errorColor);
 		printf("\nError: El nombre tiene menos de 2 mayusculas\n");
 		printf("\nCantidad de mayusculas: %i\n", May);
 
 		pause();
-		color(30); //Color normal
+		color(normalColor); 
 		return false;
 	}
 	
@@ -152,17 +163,17 @@ bool VerificadorUserUser(char Usuario[50])
 	fread(&NewUser, sizeof(NewUser), 1, Users); 
 	//Comprueba si el usuario ya existe dentro del archivo
 
-	printf(".")
+	printf(".");
 	while(!feof(Users))
 	{
 		if(strcmp(NewUser.usuario, Usuario) == 0)
 		{
 			//Aparece un error si el usuario ya existe en el archivo "Usuarios.dat"
-			color(46); //Color de error
+			color(errorColor);
 			printf("\nError: El usuario ingresado ya existe intento con otro nombre de usuario\n");
 
 			pause();
-			color(30); //Color normal
+			color(normalColor);
 			return false;
 		}
 		fread(&NewUser, sizeof(NewUser), 1, Users);
@@ -170,10 +181,10 @@ bool VerificadorUserUser(char Usuario[50])
 	fclose(Users); //Se cierra el archivo
 	
 	//Si ha pasado todas las condiciones la contrasena es apta para uso
-	color(02)
+	color(succesfulColor)
 	printf("\nEl usuario cumple no tuvo ningun error!!!\n")
 	pause();
-	color(30);
+	color(normalColor);
 	return true;
 }
 
@@ -191,13 +202,13 @@ bool VerificadorContra(char contra[50])
 		{
 		//comprueba si no hay espacion ni signos de puntuacion
 
-		color(46); //Color de error
+		color(errorColor);
 
 		printf("\nError: Uno/s de los caracteres ingresados no es caracter alfanumerico\n");
 		printf("Caracter no alfanumerico encontrado: %c\n", contra[i]);
 		pause();
 
-		color(30); //Color normal
+		color(normalColor);
 		return false;
 		}
 		
@@ -219,13 +230,13 @@ bool VerificadorContra(char contra[50])
 			
 			if(contador > 2)
 			{
-				color(46); //Color de error
+				color(errorColor);
 
 				printf("\nError: La contrasena tiene 3 o mas numeros consecutivos\n");
 				printf("Sucesion numerica encontrada: \"%c%c%c\"\n", contra[i-1], contra[i], contra[i+1]);
 				pause();
 
-				color(30); //Color normal
+				color(normalColor);
 				return false;
 			}
 			
@@ -235,13 +246,13 @@ bool VerificadorContra(char contra[50])
 			minuscula = (minuscula || iswlower(contra[i]))? true: false;
 			mayuscula = (mayuscula || iswupper(contra[i]))? true: false;
 			if(i+1 < strlen(contra) && toupper(contra[i]) == toupper(contra[i+1]-1)){
-				color(46); //Color de error
+				color(errorColor);
 
 				printf("\nError: La contrasena tiene 2 letras consecutivas\n");
 				printf("Sucesion alfabetica encontrada: \"%c%c\"\n", contra[i], contra[i+1]);
 				pause();
 
-				color(30); //Color normal
+				color(normalColor);
 				return false;
 			}
 		}
@@ -256,32 +267,32 @@ bool VerificadorContra(char contra[50])
 	if(!minuscula)
 	{
 		//Si no hay minusculas
-		color(46); //Color de error
+		color(errorColor);
 
 		printf("\nError: Su contrasena no contiene ninguna minuscula\n");
 		pause();
-		color(30); //Color normal
+		color(normalColor);
 		return false;
 	}
 	else if(!mayuscula)
 	{
 		//Si no hay mayusculas
-		color(46); //Color de error
+		color(errorColor);
 
 		printf("\nError: Su contrasena no contiene ninguna mayuscula\n");
 		pause();
-		color(30); //Color normal
+		color(normalColor);
 		return false;
 	}
 
 	else if(!numero)
 	{
 		//Si no hay numeros
-		color(46); //Color de error
+		color(errorColor);
 
 		printf("\nError: Su contrasena no contiene ningun numero\n");
 		pause();
-		color(30); //Color normal
+		color(normalColor);
 		return false;
 	}
 
@@ -290,33 +301,33 @@ bool VerificadorContra(char contra[50])
 	if(strlen(contra) < 6)
 	{
 		//Si es menor a 6 caracteres
-		color(46); //Color de error
+		color(errorColor);
 
 		printf("\nError: Su contrasena es contiene menos de los caracteres indicados(6)\n");
 		printf("Cantidad de caracteres: %i\n", strlen(contra));
 		pause();
-		color(30); //Color normal
+		color(normalColor);
 
 		return false;
 	}
 	else if(strlen(contra) > 32)
 	{
 		//Si es mas de 32 caracteres
-		color(46); //Color de error
+		color(errorColor);
 
 		printf("\nError: Su contrasena es contiene mas de los caracteres indicados(32)\n");
 		printf("Cantidad de caracteres: %i\n", strlen(contra));
 		pause();
-		color(30); //Color normal
+		color(normalColor);
 
 		return false;
 	}
 
 	//Si ha pasado todas las condiciones la contrasena es apta para uso
-	color(02)
+	color(succesfulColor);
 	printf("\nLa contrasena cumple no tuvo ningun error!!!\n")
 	pause();
-	color(30);
+	color(normalColor);
 	return true;
 
 }
