@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include "library.h"
+
+
 #define pause(); system("PAUSE"); system("CLS");
 #define color(c); system("COLOR " #c);
-
 
 //El color normal de la pantalla es 30
 //El color error es 46
 //El color de salida por error es 07
 //El color de function exitosa es 02
+
+
 
 bool loginUser(char usuario[50], char contrasena[50], char Nombre[60])
 {
