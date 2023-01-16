@@ -1,10 +1,11 @@
+#ifndef Login_h
+#define Login_h
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "library.h"
-
-
 #define pause(); system("PAUSE"); system("CLS");
 #define color(c); system("COLOR " #c);
 
@@ -53,3 +54,4 @@ bool loginUser(char usuario[50], char contrasena[50], char Nombre[60])
 	fclose(ArchivoUser);
 }
 
+#endif

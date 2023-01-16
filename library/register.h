@@ -1,14 +1,35 @@
+#ifndef register_h
+#define register_h
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <wctype.h>
 #include <ctype.h>
+#include "library.h"
 
 #define color(c); system("COLOR " #c);
 #define pause(); system("PAUSE"); system("CLS");
-bool VerificadorUserUser();
-bool VerificadorPass();
+#define IngresarNumero(TipoDato, Dato, Quien); \
+system("CLS"); printf("Ingresar %s del nuevo %s",TipoDato , Quien); \
+if(sizeof(Dato) == sizeof(int)){ \
+	scanf("%i", &Dato); \
+} \
+else{ \
+	scanf("%f", &Dato);\
+}
+
+#define IngresarChar(TipoDato, Texto, Quien); \
+system("CLS"); printf("Ingresar %s del nuevo %s",TipoDato , Quien); \
+_flushall(); gets(Texto); _flushall();
+
+void IngresarDatoChar(char Nombre[50], char Dato[300], char Quien[20]);
+bool VerificadorPass(char contra[50]);
+bool VerificadorUserUser(char Usuario[50]);
+
+bool CreationSocio();
+bool registerUser();
 
 //El color normal de la pantalla es 30
 //El color error es 46
@@ -65,7 +86,8 @@ bool registerUser()
 			//Si la contrasena es aceptada saldra del while
 			break;
 		}
-		else{
+		else
+		{
 			printf("Quiere volver a intentar? (S)i o (N)o");
 			scanf("%c", &Intento);
 			if(toupper(Intento) != 'S')
@@ -76,33 +98,11 @@ bool registerUser()
 			{
 				printf("Vuelva a ingresar una contrasena: ");
 			}
-			
 		}
 	}
 	
 	char nombre[60];
-	char Rta;
-	while(true){
-		printf("Ingrese el nombre y apellido del usuario: ");
-		_flushall();
-		gets(nombre);
-		_flushall();
-		printf("Esta seguro? 'Si' o 'No'\n");
-		_flushall();
-		scanf("%c", &Rta);
-		_flushall();
-		if(toupper(Rta) == 'S')
-		{
-			break;
-			pause();
-		}
-		else
-		{
-			continue;
-			pause();
-		}
-
-	}
+	IngresarChar("nombre y apellido", nombre, "usuario");
 	strcpy(NewUser.usuario, User);
 	strcpy(NewUser.contrasena, Contra);
 	strcpy(NewUser.ApelYNom, nombre);
@@ -118,6 +118,28 @@ bool registerUser()
 	
 	fwrite(&NewUser, sizeof(NewUser), 1, ArchivoUser);
 	fclose(ArchivoUser);
+}
+
+bool CreationSocio()
+{	
+	system("CLS");
+	struct Socio NewSocio; 
+	color(30);
+	printf("Bienvenido a la creacion de socio\n");
+	pause();
+	
+	//Se ingresa el nombre y apellido
+	IngresarChar("Nombre", NewSocio.ApelYNom, "socio");
+	//Se ingresa la direccion
+	IngresarChar("Direccion", NewSocio.Direccion, "socio");
+	//Se ingresa el celular
+	IngresarNumero("Celular", NewSocio.Celular, "socio");
+	//Se ingresa el dni
+	IngresarNumero("DNI", NewSocio.DNI, "socio");
+	//Se ingresa las indicaciones medicas
+	IngresarChar("Indicaciones Medicas", NewSocio.IndicacionesMedicas, "socio");
+	IngresarNumero("Altura", NewSocio.Altura, "socio");
+	IngresarNumero("Peso", NewSocio.Altura, "socio");
 }
 
 bool VerificadorUserUser(char Usuario[50])
@@ -197,7 +219,7 @@ bool VerificadorUserUser(char Usuario[50])
 	if(Users == NULL)
 	{
 		color(46);
-		printf("\nError: El archivo \'Usuarios.dat\' no se encuentra disponible\n");
+		printf("\nError: El archivo \"Usuarios.dat\" no se encuentra disponible\n");
 		pause();
 		color(07);
 		exit(EXIT_FAILURE);
@@ -371,3 +393,5 @@ bool VerificadorPass(char contra[50])
 	return true;
 
 }
+
+#endif
