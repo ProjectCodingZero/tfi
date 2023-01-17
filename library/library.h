@@ -17,7 +17,7 @@ struct Entrenador{
 	char ApelYNom[60];
 	int Dias[6];
 	int Legajo;
-	char contrasena[10];
+	char contrasena[50];
 };
 
 struct Socio{

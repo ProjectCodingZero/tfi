@@ -12,7 +12,7 @@
 #define color(c); system("COLOR " #c);
 #define pause(); system("PAUSE"); system("CLS");
 #define IngresarNumero(TipoDato, Dato, Quien); \
-system("CLS"); printf("Ingresar %s del nuevo %s",TipoDato , Quien); \
+system("CLS"); printf("Ingresar %s del nuevo %s\n",TipoDato , Quien); \
 if(sizeof(Dato) == sizeof(int)){ \
 	scanf("%i", &Dato); \
 } \
@@ -21,7 +21,7 @@ else{ \
 }
 
 #define IngresarChar(TipoDato, Texto, Quien); \
-system("CLS"); printf("Ingresar %s del nuevo %s",TipoDato , Quien); \
+system("CLS"); printf("Ingresar %s del nuevo %s\n",TipoDato , Quien); \
 _flushall(); gets(Texto); _flushall();
 
 void IngresarDatoChar(char Nombre[50], char Dato[300], char Quien[20]);
