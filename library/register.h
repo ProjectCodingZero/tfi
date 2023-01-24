@@ -109,17 +109,17 @@ bool registerUser()
 	strcpy(NewUser.contrasena, Contra);
 	strcpy(NewUser.ApelYNom, nombre);
 
-	FILE *ArchivoUser;
-	ArchivoUser = fopen("../data/Usuarios.dat", "ab"); //Agregar datos al Usuarios.dat ubicado en la carpeta data
-	if(ArchivoUser == NULL)
+	FILE *UserArch;
+	UserArch = fopen("../data/Usuarios.dat", "ab"); //Agregar datos al Usuarios.dat ubicado en la carpeta data
+	if(UserArch == NULL)
 	{
 		color(46);
 		printf("\nError el archivo no se pudo crear\\escribir\n");
 		color(07);
 	}
 	
-	fwrite(&NewUser, sizeof(NewUser), 1, ArchivoUser);
-	fclose(ArchivoUser);
+	fwrite(&NewUser, sizeof(NewUser), 1, UserArch);
+	fclose(UserArch);
 }
 
 bool CreationSocio()
@@ -152,8 +152,8 @@ bool CreationSocio()
 	do{
 		scanf("%i/%i/%i", &NewSocio.FechaNacimiento.Dia, &NewSocio.FechaNacimiento.Mes, &NewSocio.FechaNacimiento.Anual);
 	}while((NewSocio.FechaNacimiento.Dia >= 1 && NewSocio.FechaNacimiento.Dia <= 31) && (1 <= NewSocio.FechaNacimiento.Mes && NewSocio.FechaNacimiento.Mes <= 12) && (1000 <= NewSocio.FechaNacimiento.Anual && NewSocio.FechaNacimiento.Anual <= 9999));
-	FILE *SocioArch = fopen("../data/Socios.dat", "ab");
-	fwrite(&NewSocio, sizeof(NewSocio), 1, SocioArch);
+	FILE *SociosArch = fopen("../data/Socios.dat", "ab");
+	fwrite(&NewSocio, sizeof(NewSocio), 1, SociosArch);
 	printf("El socio fue registrado correctamente\n");
 	pause();
 	
@@ -228,23 +228,23 @@ bool VerificadorUserUser(char Usuario[50])
 		return false;
 	}
 	
-	FILE *Users;
+	FILE *UserArch;
 	struct Usuario NewUser;
-	Users = fopen("../data/Usuarios.dat", "rb");
-	rewind(Users);
+	UserArch = fopen("../data/Usuarios.dat", "rb");
+	rewind(UserArch);
 	//Comprobar si existe el archivos Usuarios.dat
-	if(Users == NULL)
+	if(UserArch == NULL)
 	{
 		color(46);
-		printf("\nError: El archivo \"Usuarios.dat\" no se encuentra disponible\n");
+		printf("\nERROR :: NO EXISTE EL ARCHIVO \"Usuarios.dat\"\n");
 		pause();
 		color(07);
 		exit(EXIT_FAILURE);
 	}
-	fread(&NewUser, sizeof(NewUser), 1, Users); 
+	fread(&NewUser, sizeof(NewUser), 1, UserArch); 
 	//Comprueba si el usuario ya existe dentro del archivo
 	printf(".");
-	while(!feof(Users))
+	while(!feof(UserArch))
 	{
 		if(strcmp(NewUser.usuario, Usuario) == 0)
 		{
@@ -256,9 +256,9 @@ bool VerificadorUserUser(char Usuario[50])
 			color(30);
 			return false;
 		}
-		fread(&NewUser, sizeof(NewUser), 1, Users);
+		fread(&NewUser, sizeof(NewUser), 1, UserArch);
 	}
-	fclose(Users); //Se cierra el archivo
+	fclose(UserArch); //Se cierra el archivo
 	//Si ha pasado todas las condiciones la contrasena es apta para uso
 	color(02);
 	printf("\nEl usuario cumple no tuvo ningun error!!!\n")
@@ -433,14 +433,14 @@ void RegistrarRutinas()
 	pause();
 	bool Valido;
 	int legajo;
-	FILE *ArchEntrenadores = fopen("../data/Entrenadores.dat", "rb");
+	FILE *EntrenadorArch = fopen("../data/Entrenadores.dat", "rb");
 	
 	//Se comprueba que el archivo exista
 	//Para comprobar si el legajo es valido
-	if(ArchEntrenadores == NULL)
+	if(EntrenadorArch == NULL)
 	{
 		color(46);
-		printf("\nError: El archivo \"Entrenadores\" no existe\n");
+		printf("\nERROR :: NO EXISTE EL ARCHIVO \"Entrenadores\"\n");
 		pause();
 		color(07);
 		exit(EXIT_FAILURE);
@@ -452,16 +452,17 @@ void RegistrarRutinas()
 		{
 			printf("Ingresar el legajo del entrenador\n");
 			scanf("%i", &Turno.legajoEntranador);
-			rewind(ArchEntrenadores);
-			fread(&Entrenadores, sizeof(Entrenadores), 1, ArchEntrenadores);
-			while(!feof(ArchEntrenadores))
+			rewind(EntrenadorArch);
+			fread(&Entrenadores, sizeof(Entrenadores), 1, EntrenadorArch);
+			while(!feof(EntrenadorArch))
 			{
 				if(Entrenadores.Legajo == legajo)
 				{
 					Valido = true;
 					break;
 				}
-				fread(&Entrenadores, sizeof(Entrenadores), 1, ArchEntrenadores);
+				else
+					fread(&Entrenadores, sizeof(Entrenadores), 1, EntrenadorArch);
 			}
 			if(!Valido)
 			{
@@ -477,17 +478,17 @@ void RegistrarRutinas()
 	}
 	//Reestablecemos valido
 	Valido = 0;
-	fclose(ArchEntrenadores);
+	fclose(EntrenadorArch);
 	pause();
 	//Ahora verificamos si el socio es valido
 	int NroSocio;
 	
-	FILE *archSocios = fopen("../data/Socios.dat", "rb");
+	FILE *SociosArch = fopen("../data/Socios.dat", "rb");
 	//Se comprueba que el archivo exista
-	if(archSocios == NULL)
+	if(SociosArch == NULL)
 	{
 		color(46);
-		printf("\nError: El archivo \"Socios.dat\" no existe\n");
+		printf("\nERROR :: NO EXISTE EL ARCHIVO \"Socios.dat\"\n");
 		pause();
 		color(07);
 		exit(EXIT_FAILURE);
@@ -499,16 +500,16 @@ void RegistrarRutinas()
 		{
 			printf("Ingresar el numero de socio\n");
 			scanf("%i", &NroSocio);
-			rewind(archSocios);
-			fread(&Socios, sizeof(Socios), 1, archSocios);
-			while(!feof(ArchEntrenadores))
+			rewind(SociosArch);
+			fread(&Socios, sizeof(Socios), 1, SociosArch);
+			while(!feof(SociosArch))
 			{
 				if(Socios.NroSocio == NroSocio)
 				{
 					Valido = true;
 					break;
 				}
-				fread(&Socios, sizeof(Socios), 1, archSocios);
+				fread(&Socios, sizeof(Socios), 1, SociosArch);
 			}
 			if(!Valido)
 			{
@@ -523,10 +524,10 @@ void RegistrarRutinas()
 		}
 	
 	}
-	fclose(archSocios);
+	fclose(SociosArch);
 	color(02);
-	FILE *archTurnos = fopen("../data/Turnos.dat", "ab");
-	fwrite(&Turno, sizeof(Turno), 1, archTurnos);
+	FILE *TurnosArch = fopen("../data/Turnos.dat", "ab");
+	fwrite(&Turno, sizeof(Turno), 1, TurnosArch);
 	printf("\nSe registro exitosamente la rutina\n");
 	pause();
 	color(30);
