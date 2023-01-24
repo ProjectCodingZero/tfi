@@ -1,10 +1,9 @@
 
 #include "./library/Login.h"
 #include "./library/Register.h"
-
+#include "./library/library.h"
 int main(){
 
 	CreationSocio();
-		sexo;
     return 0;
 }

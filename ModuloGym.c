@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "./library/login.h"
-#include "./library/library.h"
+#include "./library/listado.h"
 #include "./library/register.h"
 #define pause(); system("PAUSE"); system("CLS");
 #define color(c); system("COLOR " #c);
@@ -93,7 +93,7 @@ void main()
          case 3:
          	printf("\nA ingresado a al registrar rutinas\n");
          	pause();
-         	RegistrarRutinas();
+         	RegistrarTurnos();
          	break;
          case 4:
          	printf("\nA continuacion se cerrara la aplicacion\n");

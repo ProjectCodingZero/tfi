@@ -10,20 +10,19 @@
 void menu()
 {
    struct Usuario TheUser;
-   char Intento;
    system("CLS");
    color(30);
    int Rta;
    while(true)
    {
-      printf('Bienvenido al Modulo Gym\n');
-      printf('Las opciones son:\n');
-      printf('1.- Iniciar Sesión.\n');
-      printf('2.- Registrar usuario de Recepción.\n');
-      printf('3.- Calcular pago al entrenador.\n')
-      printf('4.- Entrenador con mayor carga horaria.\n');
-      printf('5.- Cerrar la aplicación.\n\n');
-      printf('Ingresar una opcion: ');
+      printf("Bienvenido al Modulo Gym\n");
+      printf("Las opciones son:\n");
+      printf("1.- Iniciar Sesión.\n");
+      printf("2.- Registrar usuario de Recepción.\n");
+      printf("3.- Calcular pago al entrenador.\n")
+      printf("4.- Entrenador con mayor carga horaria.\n");
+      printf("5.- Cerrar la aplicación.\n\n\n");
+      printf("Ingresar una opcion: ");
       scanf("%i", &Rta);
       switch(Rta)
       {

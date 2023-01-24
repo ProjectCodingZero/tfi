@@ -40,14 +40,15 @@ struct Entrenador{
 
 struct Socio{
 	char ApelYNom[60];
-	char Direccion[60];
 	int Celular;
 	int DNI;
-	char Actividades[100];
+	char Actividades[380];
+	char IndMedicas[300];
 	float Altura;
 	float Peso;
 	int NroSocio;
-	struct Fecha FechaNacimiento;
+	struct Fecha FechaRutina[10];
+	struct Fecha FechaIng;
 };
 
 struct Turnos{
@@ -55,30 +56,8 @@ struct Turnos{
 	struct Fecha fecha;
 	int nroSocio;
 };
-//El listado de los socios y que actividades que desarrolla
-void ListadoSocios(){
-	color(30);
-	struct Socio Socios;
-	FILE *SocioArch = fopen("../data/Socios.dat", "rb");
-	if(SocioArch == NULL){
-		color(46);
-		printf("\nError: El archivo \"Socios.dat\" no existe\n");
-		pause();
-		color(07);
-		exit(EXIT_FAILURE);
-	}
-	else{
-		fread(&Socios, sizeof(Socios), 1, SocioArch);
-		while(!feof(SocioArch)){
-			printf("\nNombre Completo: %s\n", Socios.ApelYNom);
-			printf("Direccion: %s\nCelular:%i\n", Socios.Direccion, Socios.Celular);
-			printf("DNI: %i\nActividades: %s\n Altura: %.2f\n", Socios.DNI, Socios.Actividades, Socios.Altura);
-			printf("Peso: %.2f\nNumero de Socio: %i\n", Socios.Peso, Socios.NroSocio);
-			printf("Fecha: %02i\\%02i\\%04i\n", Socios.FechaNacimiento.Dia, Socios.FechaNacimiento.Mes, Socios.FechaNacimiento.Anual);
-			pause();
-		}
-	}
-}
+
+
 //El color normal de la pantalla es 30
 //El color error es 46
 //El color de salida por error es 07
