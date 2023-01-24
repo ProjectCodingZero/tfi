@@ -1,6 +1,9 @@
+#ifndef ModuloGym_h
+#define ModuloGym_h
+
 #include <stdio.h>
 #include <stdlib.h>
-
+#
 #define pause(); system("PAUSE"); system("CLS");
 #define color(c); system("COLOR " #c);
 //El color normal de la pantalla es 30
@@ -49,3 +52,5 @@ void menu()
       }
    }
 }
+
+#endif

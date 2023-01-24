@@ -7,7 +7,9 @@
 #include <string.h>
 #include <wctype.h>
 #include <ctype.h>
+#include <time.h>
 #include "library.h"
+
 
 #define color(c); system("COLOR " #c);
 #define pause(); system("PAUSE"); system("CLS");
@@ -137,9 +139,24 @@ bool CreationSocio()
 	//Se ingresa el dni
 	IngresarNumero("DNI", NewSocio.DNI, "socio");
 	//Se ingresa las indicaciones medicas
-	IngresarChar("Indicaciones Medicas", NewSocio.IndicacionesMedicas, "socio");
+	int i, rta = 15;
+	IngresarChar("Actividaes", NewSocio.Actividades, "socio");
+	//Se ingresa la altura
 	IngresarNumero("Altura", NewSocio.Altura, "socio");
+	//Se ingresa el peso
 	IngresarNumero("Peso", NewSocio.Altura, "socio");
+	srand(time(NULL));
+	NewSocio.NroSocio = rand() % 2147483647;
+	printf("El numero de socio asignado es %i\n", NewSocio.NroSocio);
+	printf("Ingrese la fecha XX/XXXX/XX\n");
+	do{
+		scanf("%i/%i/%i", NewSocio.FechaNacimiento.Dia, NewSocio.FechaNacimiento.Mes, NewSocio.FechaNacimiento.Anual);
+	}while((NewSocio.FechaNacimiento.Dia >= 1 && NewSocio.FechaNacimiento.Dia <= 31) && (1 <= NewSocio.FechaNacimiento.Mes && NewSocio.FechaNacimiento.Mes <= 12) && (1000 <= NewSocio.FechaNacimiento.Anual && NewSocio.FechaNacimiento.Anual <= 9999));
+	FILE *SocioArch = fopen("../data/Socios.dat", "ab");
+	fwrite(&NewSocio, sizeof(NewSocio), 1, SocioArch);
+	printf("El socio fue registrado correctamente\n");
+	pause();
+	
 }
 
 bool VerificadorUserUser(char Usuario[50])
@@ -393,5 +410,7 @@ bool VerificadorPass(char contra[50])
 	return true;
 
 }
-
+void RegistrarTurnos(){
+	
+}
 #endif
