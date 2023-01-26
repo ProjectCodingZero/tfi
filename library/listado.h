@@ -10,7 +10,7 @@
 void ListadoSocios(){
 	color(30);
 	struct Socio Socios;
-	FILE *SocioArch = fopen("../data/Socios.dat", "rb");
+	FILE *SocioArch = fopen("Socios.dat", "rb");
 	if(SocioArch == NULL){
 		color(46);
 		printf("\nERROR :: NO EXISTE EL ARCHIVO \"Socios.dat\"\n");
@@ -48,7 +48,7 @@ void ListadoSocios(){
 void ListadoUsuariosAdmin(){
 	color(30);
 	struct Usuario User;
-	FILE *UserArch = fopen("../data/Usuarios.dat", "rb");
+	FILE *UserArch = fopen("Usuarios.dat", "rb");
 	if(UserArch == NULL){
 		color(46);
 		printf("\nERROR :: NO EXISTE EL ARCHIVO \"Usuarios.dat\"\n");

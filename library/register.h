@@ -49,10 +49,10 @@ bool registerUser()
 	{
 
 		printf("El usuario debe ser:\n");
-		printf("* Ser único para cada usuario registrado.\n");
-		printf("* Comenzar con una letra minúscula.\n");
-		printf("* Tener al menos 2 letras mayúsculas.\n");
-		printf("* Tener como máximo 3 dígitos.\n");
+		printf("* Ser unico para cada usuario registrado.\n");
+		printf("* Comenzar con una letra minuscula.\n");
+		printf("* Tener al menos 2 letras mayusculas.\n");
+		printf("* Tener como maximo 3 digitos.\n");
 		printf("Ingresar el nuevo usuario: ");
 		_flushall();
 		gets(NewUser.usuario);
@@ -85,11 +85,11 @@ bool registerUser()
 	
 	while(true)
 	{
-		printf("* Deberá contener al menos una letra mayúscula, una letra minúscula y un número.\n");
-		printf("* Sólo caracteres alfanuméricos.\n");
-		printf("* Deberá tener entre 6 y 32 caracteres.\n");
-		printf("* No debe tener más de 3 caracteres numéricos consecutivos.\n");
-		printf("* No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas\n");
+		printf("* Debera contener al menos una letra mayuscula, una letra minuscula y un numero.\n");
+		printf("* Sólo caracteres alfanumericos.\n");
+		printf("* Debera tener entre 6 y 32 caracteres.\n");
+		printf("* No debe tener mas de 3 caracteres numericos consecutivos.\n");
+		printf("* No debe tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas\n");
 		printf("Ingrese la contrasena del nuevo usuario: ");
 		_flushall();
 		gets(NewUser.contrasena);
@@ -123,7 +123,7 @@ bool registerUser()
 	IngresarChar("nombre y apellido", NewUser.ApelYNom, "usuario");
 
 	FILE *UserArch;
-	UserArch = fopen("../data/Usuarios.dat", "ab"); //Agregar datos al Usuarios.dat ubicado en la carpeta data	
+	UserArch = fopen("Usuarios.dat", "ab"); //Agregar datos al Usuarios.dat ubicado en la carpeta data	
 	fwrite(&NewUser, sizeof(NewUser), 1, UserArch);
 	fclose(UserArch);
 }
@@ -150,7 +150,7 @@ void CreationSocio()
 	//Se ingresa el peso
 	IngresarNumero("Peso", NewSocio.Altura, "socio");
 	srand(time(NULL));
-	FILE *SociosArch = fopen("../data/Socios.dat", "rb");
+	FILE *SociosArch = fopen("Socios.dat", "rb");
 	
 	// Se abre el archivo para comprobar que el numero de socio no es repetido
 	if(SociosArch == NULL){
@@ -203,7 +203,7 @@ void CreationSocio()
 		NewSocio.FechaRutina[i].Anual = 0;
 	}
 	
-	SociosArch = fopen("../data/Socios.dat", "ab");
+	SociosArch = fopen("Socios.dat", "ab");
 	fwrite(&NewSocio, sizeof(NewSocio), 1, SociosArch);
 	printf("El socio fue registrado correctamente\n");
 	pause();
@@ -233,7 +233,7 @@ void RegistrarTurnos()
 	pause();
 	bool Valido;
 	int legajo;
-	FILE *EntrenadorArch = fopen("../data/Entrenadores.dat", "rb");
+	FILE *EntrenadorArch = fopen("Entrenadores.dat", "rb");
 	
 	//Se comprueba que el archivo exista
 	//Para comprobar si el legajo es valido
@@ -283,7 +283,7 @@ void RegistrarTurnos()
 	//Ahora verificamos si el socio es valido
 	int NroSocio;
 	
-	FILE *SociosArch = fopen("../data/Socios.dat", "rb");
+	FILE *SociosArch = fopen("Socios.dat", "rb");
 	//Se comprueba que el archivo exista
 	if(SociosArch == NULL)
 	{
@@ -326,7 +326,7 @@ void RegistrarTurnos()
 	}
 	fclose(SociosArch);
 	color(02);
-	FILE *TurnosArch = fopen("../data/Turnos.dat", "ab");
+	FILE *TurnosArch = fopen("Turnos.dat", "ab");
 	fwrite(&Turno, sizeof(Turno), 1, TurnosArch);
 	printf("\nSe registro exitosamente la rutina\n");
 	pause();
@@ -404,13 +404,13 @@ bool VerificadorUserUser(char Usuario[50])
 	
 	FILE *UserArch;
 	struct Usuario NewUser;
-	UserArch = fopen("../data/Usuarios.dat", "rb");
+	UserArch = fopen("Usuarios.dat", "rb");
 	rewind(UserArch);
 	//Comprobar si existe el archivos Usuarios.dat
 	if(UserArch == NULL)
 	{
 		fclose(UserArch);
-		UserArch = fopen("../data/Usuarios.dat", "wb");
+		UserArch = fopen("Usuarios.dat", "wb");
 		printf("\nSe acaba de crear la carpeta \"Usuarios.dat\n");
 		fclose(UserArch);
 	}
