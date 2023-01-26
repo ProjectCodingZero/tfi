@@ -150,7 +150,7 @@ void CreationSocio()
 	//Se ingresa el peso
 	IngresarNumero("Peso", NewSocio.Altura, "socio");
 	srand(time(NULL));
-	FILE *SociosArch = fopen("Socios.dat", "rb");
+	FILE *SociosArch = fopen("./Socios.dat", "rb");
 	
 	// Se abre el archivo para comprobar que el numero de socio no es repetido
 	if(SociosArch == NULL){
@@ -180,9 +180,9 @@ void CreationSocio()
 	
 	while(true)
 	{
-		printf("Ingrese la fecha de ingreso XX/XXXX/XX\n");
+		printf("Ingrese la fecha de ingreso XX/XX/XXXX\n");
 		scanf("%i/%i/%i", &NewSocio.FechaIng.Dia, &NewSocio.FechaIng.Mes, &NewSocio.FechaIng.Anual);
-		if((NewSocio.FechaIng.Dia >= 1 && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (1000 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 9999)){
+		if((1 <= NewSocio.FechaIng.Dia && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (1000 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 9999)){
 			color(46);
 			printf("Error: La fecha ingresa es invalida\n");
 			printf("Fecha ingresada: %02i/%02i/%04i\n", NewSocio.FechaIng.Dia, NewSocio.FechaIng.Mes, NewSocio.FechaIng.Anual);
