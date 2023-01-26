@@ -11,7 +11,7 @@ void main()
    system("CLS");
    color(30);
    int Rta;
-   printf("PRECACUION:: Este modulo solo debera ser utilizado para ver el listado y/o creacion los siguientes\n");
+   printf("PRECACUCION:: Este modulo solo debera ser utilizado para ver el listado y/o creacion los siguientes\n");
    printf("USUARIOS, SOCIOS, ENTRENADORES Y/O TURNOS\n");
    pause();
    while(true)

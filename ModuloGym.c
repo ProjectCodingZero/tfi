@@ -14,7 +14,6 @@ void main()
 {
    	struct Entrenador ElEntrenador;
    	bool InicioSesion = false;
-   	char Intento;
    	system("CLS");
    	color(30);
    	int Rta;
@@ -26,7 +25,7 @@ void main()
    		printf("Bienvenido al Modulo Gym Anonimo\n");
    		printf("Ingresar una opcion: \n\n");
    		printf("Las opciones son:\n");
-     	printf("1.- Cambiar de seccion.\n");
+     	printf("1.- Iniciar Seccion.\n");
      	printf("2.- Cerrar la aplicacion.\n\n\n");
       	scanf("%i", &Rta);
       	printf("Ingresar una opcion: ");

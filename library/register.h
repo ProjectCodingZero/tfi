@@ -47,7 +47,7 @@ bool registerUser()
 
 	while(true)
 	{
-		printf("Ingresar nuevo usuario: ");
+		printf("Ingresar el nuevo usuario: ");
 		_flushall();
 		gets(NewUser.usuario);
 		_flushall();
@@ -119,6 +119,7 @@ bool registerUser()
 		printf("\nError el archivo no se pudo crear/escribir\n");
 		color(07);
 	}
+
 	
 	fwrite(&NewUser, sizeof(NewUser), 1, UserArch);
 	fclose(UserArch);
@@ -405,11 +406,9 @@ bool VerificadorUserUser(char Usuario[50])
 	//Comprobar si existe el archivos Usuarios.dat
 	if(UserArch == NULL)
 	{
-		color(46);
-		printf("\nERROR :: NO EXISTE EL ARCHIVO \"Usuarios.dat\"\n");
-		pause();
-		color(07);
-		exit(EXIT_FAILURE);
+		fclose(UserArch);
+		UserArch = fopen("../data/Usuarios.dat", "ab");
+		printf("\nSe acaba de crear la carpeta \"Usuarios.dat\n");
 	}
 	fread(&NewUser, sizeof(NewUser), 1, UserArch); 
 	//Comprueba si el usuario ya existe dentro del archivo
