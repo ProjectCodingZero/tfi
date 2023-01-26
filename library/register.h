@@ -404,7 +404,7 @@ bool VerificadorUserUser(char Usuario[50])
 	
 	FILE *UserArch;
 	struct Usuario NewUser;
-	UserArch = fopen("Usuarios.dat", "rb");
+	UserArch = fopen("./Usuarios.dat", "rb");
 	rewind(UserArch);
 	//Comprobar si existe el archivos Usuarios.dat
 	if(UserArch == NULL)
@@ -420,11 +420,12 @@ bool VerificadorUserUser(char Usuario[50])
 		printf(".");
 		while(!feof(UserArch))
 		{
+			
 			if(strcmp(NewUser.usuario, Usuario) == 0)
 			{
 				//Aparece un error si el usuario ya existe en el archivo "Usuarios.dat"
 				color(46);
-				printf("\nError: El usuario ingresado ya existe intento con otro nombre de usuario\n");
+				printf("\nError: El usuario ingresado ya existe\n");
 
 				pause();
 				color(30);
