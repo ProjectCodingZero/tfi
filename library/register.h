@@ -47,8 +47,13 @@ bool registerUser()
 
 	while(true)
 	{
-		printf("Ingresar el nuevo usuario: \n");
-		
+
+		printf("* El usuario debe ser:\n");
+		printf("* Ser único para cada usuario registrado.\n");
+		printf("* Comenzar con una letra minúscula.\n");
+		printf("* Tener al menos 2 letras mayúsculas.\n");
+		printf("* Tener como máximo 3 dígitos.\n")
+		printf("Ingresar el nuevo usuario: ");
 		_flushall();
 		gets(NewUser.usuario);
 		_flushall();
@@ -80,6 +85,14 @@ bool registerUser()
 	
 	while(true)
 	{
+		printf("* Deberá contener al menos una letra mayúscula, una letra minúscula y un número.\n");
+		printf("* No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres
+alfanuméricos.\n");
+		printf("* Deberá tener entre 6 y 32 caracteres.\n");
+		printf("*No debe tener más de 3 caracteres numéricos consecutivos.\n");
+		printf("* No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas
+(ascendentemente). Este criterio es válido tanto para letras mayúsculas, minúsculas o
+combinación de ambas.\n");
 		printf("Ingrese la contrasena del nuevo usuario: ");
 		_flushall();
 		gets(NewUser.contrasena);
