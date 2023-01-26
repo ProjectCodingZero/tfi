@@ -48,7 +48,7 @@ bool registerUser()
 	while(true)
 	{
 
-		printf("* El usuario debe ser:\n");
+		printf("El usuario debe ser:\n");
 		printf("* Ser único para cada usuario registrado.\n");
 		printf("* Comenzar con una letra minúscula.\n");
 		printf("* Tener al menos 2 letras mayúsculas.\n");
@@ -413,7 +413,7 @@ bool VerificadorUserUser(char Usuario[50])
 	if(UserArch == NULL)
 	{
 		fclose(UserArch);
-		UserArch = fopen("../data/Usuarios.dat", "ab");
+		UserArch = fopen("../data/Usuarios.dat", "wb");
 		printf("\nSe acaba de crear la carpeta \"Usuarios.dat\n");
 		fclose(UserArch);
 	}
