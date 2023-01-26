@@ -47,7 +47,8 @@ bool registerUser()
 
 	while(true)
 	{
-		printf("Ingresar el nuevo usuario: ");
+		printf("Ingresar el nuevo usuario: \n");
+		
 		_flushall();
 		gets(NewUser.usuario);
 		_flushall();
@@ -112,15 +113,7 @@ bool registerUser()
 	IngresarChar("nombre y apellido", NewUser.ApelYNom, "usuario");
 
 	FILE *UserArch;
-	UserArch = fopen("../data/Usuarios.dat", "ab"); //Agregar datos al Usuarios.dat ubicado en la carpeta data
-	if(UserArch == NULL)
-	{
-		color(46);
-		printf("\nError el archivo no se pudo crear/escribir\n");
-		color(07);
-	}
-
-	
+	UserArch = fopen("../data/Usuarios.dat", "ab"); //Agregar datos al Usuarios.dat ubicado en la carpeta data	
 	fwrite(&NewUser, sizeof(NewUser), 1, UserArch);
 	fclose(UserArch);
 }
