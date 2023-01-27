@@ -13,6 +13,8 @@
 
 #define color(c); system("COLOR " #c);
 #define pause(); system("PAUSE"); system("CLS");
+
+//Funcion para poder ingresar un numero ya sea int o float
 #define IngresarNumero(TipoDato, Dato, Quien); \
 system("CLS"); printf("Ingresar %s del nuevo %s\n",TipoDato , Quien); \
 if(sizeof(Dato) == sizeof(int)){ \
@@ -21,13 +23,13 @@ if(sizeof(Dato) == sizeof(int)){ \
 else{ \
 	scanf("%f", &Dato);\
 }
-
+//Funcion para poder ingresar un dato string
 #define IngresarChar(TipoDato, Texto, Quien); \
 system("CLS"); printf("Ingresar %s del nuevo %s\n",TipoDato , Quien); \
 _flushall(); gets(Texto); _flushall();
 
 bool VerificadorPass(char contra[50]);
-bool VerificadorUserUser(char Usuario[50]);
+bool VerificadorUserUser(char Usuario[50], FILE *Archivo);
 
 void CreationSocio();
 bool registerUser();
@@ -36,7 +38,7 @@ bool registerUser();
 //El color error es 46
 //El color de salida por error es 07
 //El color de function exitosa es 02
-bool registerUser()
+bool registerUser(FILE *Archivo)
 {
 	char Intento;
 	color(30);
@@ -60,7 +62,7 @@ bool registerUser()
 		printf("A continuacion se comprobora si el usuario cumple con los requisitos:\n");
 		
 		
-		if(VerificadorUserUser(NewUser.usuario))
+		if(VerificadorUserUser(NewUser.usuario, Archivo))
 		{
 			//Si el usuario el aceptado saldra del while
 			break;
@@ -86,7 +88,7 @@ bool registerUser()
 	while(true)
 	{
 		printf("* Debera contener al menos una letra mayuscula, una letra minuscula y un numero.\n");
-		printf("* Sólo caracteres alfanumericos.\n");
+		printf("* Solo caracteres alfanumericos.\n");
 		printf("* Debera tener entre 6 y 32 caracteres.\n");
 		printf("* No debe tener mas de 3 caracteres numericos consecutivos.\n");
 		printf("* No debe tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas\n");
@@ -106,15 +108,24 @@ bool registerUser()
 		{
 			printf("Quiere volver a intentar? (S)i o (N)o");
 			scanf("%c", &Intento);
-			if(toupper(Intento) != 'S')
+			if(toupper(Intento) == 'S')
 			{
+				printf("Vuelva a ingresar una contrasena\n");
+				pause();
+			}
+			else if(toupper(Intento) == 'N')
+			{
+				printf("Saliendo...\n");
 				pause();
 				return false; //Para salir de la funcion
 			}
 			else
 			{
-				printf("Vuelva a ingresar una contrasena: ");
+				color(46);
+				printf("Error: Opcion ingresada no existe\n");
+				printf("Opcion: \"%c\"\n", Intento);
 				pause();
+				color(30);
 			}
 		}
 	}
@@ -122,11 +133,148 @@ bool registerUser()
 	char nombre[60];
 	IngresarChar("nombre y apellido", NewUser.ApelYNom, "usuario");
 
-	FILE *UserArch;
-	UserArch = fopen("Usuarios.dat", "ab"); //Agregar datos al Usuarios.dat ubicado en la carpeta data	
-	fwrite(&NewUser, sizeof(NewUser), 1, UserArch);
-	fclose(UserArch);
+	//Se escribira el archivo enviada como parametro
+	fwrite(&NewUser, sizeof(NewUser), 1, Archivo);
 }
+
+
+//Para crear un entrenador
+bool RegistrarEntrenador()
+{
+	srand(time(NULL));
+	system("CLS");
+	color(30);
+	struct Entrenador NewEntrenador;
+	printf("Ingresar el nombre del nuevo entrenador\n");
+	IngresarChar("Nombre Completo", NewEntrenador.ApelYNom, "entrenador");
+	int Dia;
+	
+	//Todos los dias se ponen en cero para que el listado de entrenadores
+	for(Dia = 0; Dia < 7; Dia++)
+		NewEntrenador.Dias[Dia] = 0;
+	
+	Dia = 1;
+	while(Dia != 0)
+	{
+		printf("Ingresar el dia donde el entrenador trabajo\n");
+		printf("Lunes = 1\nMartes = 2\nMiercoles = 3");
+		printf("Jueves = 4\nViernes = 5\nSabado = 6\nDomingo = 7\n");
+		printf("Salir = 0\n\n");
+		scanf("%i", &Dia);
+		if(Dia >= 0 && Dia <= 7)
+		{
+			NewEntrenador.Dias[Dia-1] = Dia;
+			printf("Se registro correctamente el dia\n");
+			pause();
+		}
+		else if(Dia == 0)
+			break;
+		else
+		{
+			color(46);
+			printf("Error: Opcion ingresada no existe\n");
+			printf("Opcion: %i\n", Dia);
+			pause();
+			color(30);
+		}
+	}
+	//Calcular las horas del entrenador
+	for(Dia = 0; Dia < 7; Dia++)
+	{
+		if(NewEntrenador.Dias[Dia-1] != 0)
+			NewEntrenador.HrasPromedio += 8;
+	}
+	system("CLS");
+	int NroSocio;
+	
+	FILE *EntrenadoresArch = fopen("./Entrenadores.dat", "rb");
+	
+	if(EntrenadoresArch == NULL)
+	{
+		//Se comprueba que el archivo exista
+		//Si no existe lo crea
+		fclose(EntrenadoresArch);
+		EntrenadoresArch = fopen("./Entrenadores.dat", "wb");
+		fclose(EntrenadoresArch);
+		NewEntrenador.Legajo = rand() % 2147483647;
+	}
+	else
+	{
+		//Si existe se verifica que el legajo no sea repetido
+		bool Verificiar = false;
+		struct Entrenador OldEntrenador;
+		//Se hace un ciclo para ingresar un numero de socio no repetido
+		while(!Verificiar){
+			NewEntrenador.Legajo = rand() % 2147483647;
+		
+			fread(&OldEntrenador, sizeof(OldEntrenador), 1, EntrenadoresArch);
+			while(!feof(EntrenadoresArch)){
+				if(OldEntrenador.Legajo != NewEntrenador.Legajo)
+					Verificiar = true;
+				else
+					Verificiar = false;
+				fread(&OldEntrenador, sizeof(OldEntrenador), 1, EntrenadoresArch);
+			}
+		}
+	}
+	
+	printf("El legajo del nuevo entrenador es \"%i\"", NewEntrenador.Legajo);
+	pause();
+	char Intento;
+	while(true)
+	{
+		printf("* Debera contener al menos una letra mayuscula, una letra minuscula y un numero.\n");
+		printf("* Sólo caracteres alfanumericos.\n");
+		printf("* Debera tener entre 6 y 32 caracteres.\n");
+		printf("* No debe tener mas de 3 caracteres numericos consecutivos.\n");
+		printf("* No debe tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas\n");
+		printf("Ingrese la contrasena del nuevo usuario: ");
+		_flushall();
+		gets(NewEntrenador.contrasena);
+		_flushall();
+		printf("A continuacion se comprobora si la contrasena cumple con los requisitos:\n");
+		
+		
+		if(VerificadorPass(NewEntrenador.contrasena))
+		{
+			//Si la contrasena es aceptada saldra del while
+			break;
+		}
+		else
+		{
+			printf("Quiere volver a intentar? (S)i o (N)o");
+			scanf("%c", &Intento);
+			if(toupper(Intento) == 'S')
+			{
+				printf("Vuelva a ingresar una contrasena\n");
+				pause();
+			}
+			else if(toupper(Intento) == 'N')
+			{
+				printf("Saliendo...\n");
+				pause();
+				return false; //Para salir de la funcion
+			}
+			else
+			{
+				color(46);
+				printf("Error: Opcion ingresada no existe\n");
+				printf("Opcion: \"%c\"\n", Dia);
+				pause();
+				color(30);
+			}
+		}
+	}
+	system("CLS");
+	EntrenadoresArch = fopen("./Entrenadores.dat", "ab");
+	fwrite(&NewEntrenador, sizeof(NewEntrenador), 1, EntrenadoresArch);
+	fclose(EntrenadoresArch);
+	printf("El nuevo entrenador fue registrado con exito\n");
+	pause();
+	return true;
+}
+
+
 //Para crear un socio
 void CreationSocio()
 {	
@@ -176,13 +324,13 @@ void CreationSocio()
 		}
 	}
 	
-	printf("El numero de socio asignado es %i\n", NewSocio.NroSocio);
-	
+	printf("El numero de socio asignado es \"%i\"\n", NewSocio.NroSocio);
+	pause();
 	while(true)
 	{
 		printf("Ingrese la fecha de ingreso XX/XX/XXXX\n");
 		scanf("%i/%i/%i", &NewSocio.FechaIng.Dia, &NewSocio.FechaIng.Mes, &NewSocio.FechaIng.Anual);
-		if((1 <= NewSocio.FechaIng.Dia && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (1000 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 9999)){
+		if(!((1 <= NewSocio.FechaIng.Dia && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (2020 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 2023))){
 			color(46);
 			printf("Error: La fecha ingresa es invalida\n");
 			printf("Fecha ingresada: %02i/%02i/%04i\n", NewSocio.FechaIng.Dia, NewSocio.FechaIng.Mes, NewSocio.FechaIng.Anual);
@@ -192,29 +340,20 @@ void CreationSocio()
 		else
 			break;
 	}
-	do{
-		scanf("%i/%i/%i", &NewSocio.FechaIng.Dia, &NewSocio.FechaIng.Mes, &NewSocio.FechaIng.Anual);
-	}while((NewSocio.FechaIng.Dia >= 1 && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (1000 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 9999));
-	
-	//SE fija los dias de rutina para no provocar errores a futuro
-	for(i = 0; i < 10; i++){
-		NewSocio.FechaRutina[i].Dia = 0;
-		NewSocio.FechaRutina[i].Mes = 0;
-		NewSocio.FechaRutina[i].Anual = 0;
-	}
 	
 	SociosArch = fopen("Socios.dat", "ab");
 	fwrite(&NewSocio, sizeof(NewSocio), 1, SociosArch);
+	fclose(SociosArch);
 	printf("El socio fue registrado correctamente\n");
 	pause();
 	
 }
 
 //Se registra las rutinas de gimnasia
-void RegistrarTurnos()
+bool RegistrarTurnos()
 {
 	struct Turnos Turno;
-
+	int Si;
 	while(true)
 	{
 		printf("Ingresar la fecha XX/XX/XXXX\n");
@@ -234,7 +373,7 @@ void RegistrarTurnos()
 	bool Valido;
 	int legajo;
 	FILE *EntrenadorArch = fopen("Entrenadores.dat", "rb");
-	
+	struct Entrenador Entrenadores;
 	//Se comprueba que el archivo exista
 	//Para comprobar si el legajo es valido
 	if(EntrenadorArch == NULL)
@@ -247,17 +386,19 @@ void RegistrarTurnos()
 	}
 	else
 	{
-		struct Entrenador Entrenadores;
 		while(true)
 		{
 			printf("Ingresar el legajo del entrenador\n");
-			scanf("%i", &Turno.legajoEntranador);
+			printf("* El legajo ingresado debe ser de un entrenador registrado\n");
+			scanf("%i", &Turno.legajoEntrenador);
 			rewind(EntrenadorArch);
 			fread(&Entrenadores, sizeof(Entrenadores), 1, EntrenadorArch);
 			while(!feof(EntrenadorArch))
 			{
 				if(Entrenadores.Legajo == legajo)
 				{
+					printf("El legajo ingresado corresponde a %s\n", Entrenadores.ApelYNom);
+					pause();
 					Valido = true;
 					break;
 				}
@@ -267,22 +408,28 @@ void RegistrarTurnos()
 			if(!Valido)
 			{
 				color(46);
-				printf("Error: No existe un entrenador con el legajo ingresado\n");
-				printf("Legajo: %i", legajo);
+				printf("Error: No se encontro el legajo ingresado\n");
+				printf("Legajo: %i\n", legajo);
 				pause();
 				color(30);
+				printf("Quiere continuar? Si = 1// No != 1\n");
+				scanf("%i", &Si);
+				if(Si == 1)
+					printf("");
+				else
+					return false;
 			}
 			else
 				break;
 		}
 	}
 	//Reestablecemos valido
-	Valido = 0;
+	Valido = false;
 	fclose(EntrenadorArch);
-	pause();
+	system("CLS");
 	//Ahora verificamos si el socio es valido
 	int NroSocio;
-	
+	struct Socio Socios;
 	FILE *SociosArch = fopen("Socios.dat", "rb");
 	//Se comprueba que el archivo exista
 	if(SociosArch == NULL)
@@ -295,10 +442,10 @@ void RegistrarTurnos()
 	}
 	else
 	{
-		struct Socio Socios;
 		while(true)
 		{
-			printf("Ingresar el numero de socio\n");
+			printf("* El numero del socio tiene que estar registrado\n");
+			printf("Ingresar el numero de socio: ");
 			scanf("%i", &NroSocio);
 			rewind(SociosArch);
 			fread(&Socios, sizeof(Socios), 1, SociosArch);
@@ -306,6 +453,8 @@ void RegistrarTurnos()
 			{
 				if(Socios.NroSocio == NroSocio)
 				{
+					printf("El numero de socio corresponde a %s\n", Socios.ApelYNom);
+					pause();
 					Valido = true;
 					break;
 				}
@@ -314,26 +463,74 @@ void RegistrarTurnos()
 			if(!Valido)
 			{
 				color(46);
-				printf("Error: No existe un entrenador con el nuemero de socio ingresado\n");
+				printf("Error: No se encontro numero de socio ingresado\n");
 				printf("Numero de socio: %i\n", NroSocio);
 				pause();
 				color(30);
+				printf("Quiere continuar? Si = 1// No != 1\n");
+				scanf("%i", &Si);
+				if(Si == 1)
+					printf("");
+				else
+					return false;
 			}
 			else
 				break;
 		}
 	
 	}
+	
+	//Reestablecemos otra vez para comprobar si el entrenador trabaja ese dia
+	Valido = false;
+	int Dia;
+	while(!Valido)
+	{
+		printf("Ingresar el dia donde esta ubicado el turno\n");
+		printf("* El dia ingresado debe coincidir con un dia que el entrenador trabaja\n");
+		printf("Lunes = 1\nMartes = 2\nMiercoles = 3\n");
+		printf("Jueves = 4\nViernes = 5\nSabado = 6\nDomingo = 7\n\n");
+		printf("Ingrese: ");
+		scanf("%i", &Dia);
+		if(Dia >= 1 && Dia <= 7)
+		{
+			
+			pause();
+			if(Entrenadores.Dias[Dia-1] == Dia)
+			{
+				Turno.dia = Dia;
+				//Registramos el dia para el socio
+				Socios.Dias[Dia-1] = Dia;
+				printf("El dia fue exitosamenta registrado\n");
+			}
+			else{
+				//Si el dia del entrenador no coincide
+				color(46);
+				printf("Error: El dia ingresado no coincide con el del entrenador\n");
+				printf("Dia ingresado(numero): %i\n", Dia);
+				pause();
+				color(30);
+			}
+		}
+		else
+		{
+			color(46);
+			printf("Error: Opcion ingresada no valida\n");
+			printf("Opcion: %i\n", Dia);
+			pause();
+			color(30);
+		}
+	}
 	fclose(SociosArch);
 	color(02);
-	FILE *TurnosArch = fopen("Turnos.dat", "ab");
+	FILE *TurnosArch = fopen("./Turnos.dat", "ab");
 	fwrite(&Turno, sizeof(Turno), 1, TurnosArch);
+	fclose(TurnosArch);
 	printf("\nSe registro exitosamente la rutina\n");
 	pause();
 	color(30);
 }
 
-bool VerificadorUserUser(char Usuario[50])
+bool VerificadorUserUser(char Usuario[50], FILE *Archivo)
 { 	
 
 	//Verificar si el dato ingresado es correcto
@@ -347,7 +544,8 @@ bool VerificadorUserUser(char Usuario[50])
 		color(30);
 		return false;
 	}
-	else if(!(strlen(Usuario) <= 10)){
+	else if(!(strlen(Usuario) <= 10))
+	{
 		color(46);
 		printf("\nError: El usuario ingresado tiene un tamano menor a 6 caracteres\n");
 		printf("Cantidad de caracteres ingresado: %i\n", strlen(Usuario));
@@ -404,36 +602,25 @@ bool VerificadorUserUser(char Usuario[50])
 	
 	FILE *UserArch;
 	struct Usuario NewUser;
-	UserArch = fopen("./Usuarios.dat", "rb");
 	rewind(UserArch);
 	//Comprobar si existe el archivos Usuarios.dat
-	if(UserArch == NULL)
+	fread(&NewUser, sizeof(NewUser), 1, UserArch); 
+	//Comprueba si el usuario ya existe dentro del archivo
+	printf(".");
+	while(!feof(Archivo))
 	{
-		fclose(UserArch);
-		UserArch = fopen("Usuarios.dat", "wb");
-		printf("\nSe acaba de crear la carpeta \"Usuarios.dat\n");
-		fclose(UserArch);
-	}
-	else{
-		fread(&NewUser, sizeof(NewUser), 1, UserArch); 
-		//Comprueba si el usuario ya existe dentro del archivo
-		printf(".");
-		while(!feof(UserArch))
-		{
 			
-			if(strcmp(NewUser.usuario, Usuario) == 0)
-			{
-				//Aparece un error si el usuario ya existe en el archivo "Usuarios.dat"
-				color(46);
-				printf("\nError: El usuario ingresado ya existe\n");
+		if(strcmp(NewUser.usuario, Usuario) == 0)
+		{
+			//Aparece un error si el usuario ya existe en el archivo "Usuarios.dat"
+			color(46);
+			printf("\nError: El usuario ingresado ya existe\n");
 
-				pause();
-				color(30);
-				return false;
-			}
-			fread(&NewUser, sizeof(NewUser), 1, UserArch);
+			pause();
+			color(30);
+			return false;
 		}
-		fclose(UserArch); //Se cierra el archivo
+			fread(&NewUser, sizeof(NewUser), 1, Archivo);
 	}
 	//Si ha pasado todas las condiciones la contrasena es apta para uso
 	
