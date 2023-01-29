@@ -94,8 +94,9 @@ void EntMayorCarga()
 				MayorCargaHorario = ElEntrenador.cargaHoraria;
 				legajo = ElEntrenador.Legajo;
 				strcpy(ApelYNom, ElEntrenador.ApelYNom);
-				fread(&ElEntrenador, sizeof(ElEntrenador), 1, EntrenadoresArch);
+				
 			}
+			fread(&ElEntrenador, sizeof(ElEntrenador), 1, EntrenadoresArch);
 		}
 	}
 	printf("El entrenador con mayor carga horaria es:\n");
@@ -130,11 +131,11 @@ void FechaPago()
 		{
 			if(NumeroSocio == Socios.NroSocio)
 			{
-				printf("Nombre de socio: %s", Socios.ApelYNom);
+				printf("Nombre de socio: %s\n", Socios.ApelYNom);
 				printf("Su fecha de pago es %02i/%02i\n", Socios.FechaIng.Dia, Socios.FechaIng.Mes);
 				verificar = true;
 			}
-			
+			fread(&Socios, sizeof(Socios), 1, SocioArch);
 		}
 		if(!verificar)
 		{

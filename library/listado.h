@@ -282,7 +282,7 @@ void ListadoTurnos(FILE *Arch)
 				default:
 					break;
 			}
-			printf("Horario: %02i:00 ~ %02i:00", Turno.HoraInicial, Turno.HoraInicial+2)
+			printf("Horario: %02i:00 ~ %02i:00\n", Turno.HoraInicial, Turno.HoraInicial+2)
 			pause();
 			fread(&Turno, sizeof(Turno), 1, TurnosArch);
 		}
@@ -361,7 +361,7 @@ void ListadoPorAct(int Actividad)
 			}
 			for(horario = 0; horario < 7; horario++)
 			{
-				printf("Horario: %02i:00 ~ %02i:00", horarios[horario], horarios[horario]+2);
+				printf("Horario: %02i:00 ~ %02i:00\n", horarios[horario], horarios[horario]+2);
 				fread(&Turno, sizeof(Turno), 1, TurnosArch);
 				while(!feof(TurnosArch))
 				{
@@ -373,6 +373,7 @@ void ListadoPorAct(int Actividad)
 						printf("Numero de socio: %i\n", Turno.nroSocio);
 						legajoEntrenador = Turno.legajoEntrenador;
 					}
+					fread(&Turno, sizeof(Turno), 1, TurnosArch);
 				}
 				printf("Legajo del Entrenador: %i\n", legajoEntrenador);
 				pause();

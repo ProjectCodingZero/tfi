@@ -72,7 +72,7 @@ void main()
    }
    while(true)
    {
-      printf("Bienvenido al Modulo Administracion\n");
+      printf("Bienvenido al Modulo Administracion %s\n", TheUser.ApelYNom);
       printf("Las opciones son:\n");
       printf("1.- Registrar usuario de Recepcion.\n");
       printf("2.- Calcular pago al entrenador.\n");
@@ -90,6 +90,7 @@ void main()
             break;
          case 2:
          	printf("Ha ingresado al calculo del pago de un entrenador\n");
+         	pause();
          	calcularPago();
             break;
          case 3:

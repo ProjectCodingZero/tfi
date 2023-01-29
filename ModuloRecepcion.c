@@ -87,7 +87,7 @@ void main()
       	printf("3.- Listados de Socios.\n");
       	printf("4.- Listado de fechas de pagos.\n");
       	printf("5.- Listado de turnos por actividad\n");
-      	printf("5.- Cerrar la aplicación.\n\n");
+      	printf("6.- Cerrar la aplicacion.\n\n");
       	printf("Ingresar una opcion: ");
       	scanf("%i", &Rta);
       	switch(Rta)

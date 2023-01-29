@@ -299,8 +299,8 @@ void RegistrarTurnos(FILE *Arch)
 		{
 			printf("* El legajo ingresado debe ser de un entrenador registrado\n");
 			printf("Ingresar el legajo del entrenador\n");
-			system("CLS");
 			scanf("%i", &Turno.legajoEntrenador);
+			system("CLS");
 			rewind(EntrenadorArch);
 			fread(&Entrenadores, sizeof(Entrenadores), 1, EntrenadorArch);
 			while(!feof(EntrenadorArch))
