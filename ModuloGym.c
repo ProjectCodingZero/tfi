@@ -90,12 +90,12 @@ void main()
          	ListadoSocios();
          	break;
          case 2:
-         	printf("\nA ingresado a al registrar rutinas\n");
+         	printf("\nHa ingresado a al registrar rutinas\n");
          	pause();
          	RegistrarTurnos();
          	break;
          case 3:
-         	printf("\nA continuacion se cerrara la aplicacion\n");
+         	printf("\nHa continuacion se cerrara la aplicacion\n");
          	pause();
          	exit(0);
          	break;

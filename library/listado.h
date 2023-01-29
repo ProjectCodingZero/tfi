@@ -13,6 +13,7 @@ void ListadoSocios()
 	color(30);
 	struct Socio Socios;
 	FILE *SocioArch = fopen("./Socios.dat", "rb");
+	
 	if(SocioArch == NULL)
 	{
 		color(46);
@@ -39,46 +40,7 @@ void ListadoSocios()
 			
 			//Para ver que dia tiene las actividades
 			
-			//Cambiar---
-			printf("Dias: \n");
-			for(i = 0; i < 7; i++)
-			{
-				switch(Socios.Dias[i])
-				{
-					case 1:
-						printf("Lunes\n");
-						Verificar = true;
-						break;
-					case 2:
-						printf("Martes\n");
-						Verificar = true;
-						break;
-					case 3:
-						printf("Miercoles\n");
-						Verificar = true;
-						break;
-					case 4:
-						printf("Jueves\n");
-						Verificar = true;
-						break;
-					case 5:
-						printf("Viernes\n");
-						Verificar = true;
-						break;
-					case 6:
-						printf("Sabado\n");
-						Verificar = true;
-						break;
-					case 7:
-						printf("Domingo\n");
-						Verificar = true;
-						break;
-				}
-			}
-			if(!Verificar)
-			{
-				printf("No se registro ningun dia donde el socio haga activiadad\n");
-			}
+			
 			pause();
 			fread(&Socios, sizeof(Socios), 1, SocioArch);
 		}
@@ -124,7 +86,7 @@ void ListadoEntrenadorAdmin(){
 		fread(&Entrenadores, sizeof(Entrenadores), 1, EntrenadoresArch);
 		while(!feof(EntrenadoresArch)){
 			printf("\nNombre Completo: %s\n", Entrenadores.ApelYNom);
-			printf("Legajo: %i\ncontrasena:%i\n", Entrenadores.Legajo, Entrenadores.contrasena);
+			printf("Legajo: %i\n", Entrenadores.Legajo);
 			printf("Los dias que trabaja:\n");
 			for(Dia = 0; Dia < 7; Dia++)
 			{
@@ -171,7 +133,7 @@ void ListadoEntrenadorAdmin(){
 		pause();
 	}
 }
-void ListadoTurnos()
+void ListadoTurnos() //Modificar
 {
 	color(30);
 	struct Turnos Turno;
@@ -191,10 +153,9 @@ void ListadoTurnos()
 		fread(&Turno, sizeof(Turno), 1, TurnosArch);
 		while(!feof(TurnosArch))
 		{
-			printf("\nFecha: %02i/%02i/%04i\n", Turno.fecha.Dia, Turno.fecha.Mes, Turno.fecha.Anual);
 			printf("Legajo Entrenador: %i\nNumero de socio:%i\n", Turno.legajoEntrenador, Turno.nroSocio);
 			printf("Dia: ");
-			switch(Turno.dia)
+			switch(Turno.Dia)
 			{
 					case 1:
 						printf("Lunes\n");
@@ -218,7 +179,6 @@ void ListadoTurnos()
 						printf("Domingo\n");
 						break;
 					default:
-						printf("Ninguno\n");
 						break;
 			}
 		pause();

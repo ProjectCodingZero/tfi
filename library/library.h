@@ -29,9 +29,10 @@ struct Fecha
 
 struct Usuario
 {
+	char ApelYNom[60];
 	char usuario[50];
 	char contrasena[50];
-	char ApelYNom[60];
+	
 };
 
 struct Entrenador
@@ -39,8 +40,7 @@ struct Entrenador
 	char ApelYNom[60];
 	int Dias[6];
 	int Legajo;
-	char contrasena[50];
-	int HrasPromedio;
+	int cargaHoraria;
 };
 
 struct Socio
@@ -60,9 +60,9 @@ struct Socio
 struct Turnos
 {
 	int legajoEntrenador;
-	struct Fecha fecha;
-	int dia;
 	int nroSocio;
+	int Dia;
+	int HoraInicial;
 };
 
 bool RegistrarActiviades()

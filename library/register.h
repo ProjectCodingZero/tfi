@@ -8,6 +8,7 @@
 #include <wctype.h>
 #include <ctype.h>
 #include <time.h>
+#include "verificar.h"
 #include "library.h"
 
 
@@ -28,11 +29,6 @@ else{ \
 system("CLS"); printf("Ingresar %s del nuevo %s\n",TipoDato , Quien); \
 _flushall(); gets(Texto); _flushall();
 
-bool VerificadorPass(char contra[50]);
-bool VerificadorUserUser(char Usuario[50], FILE *Archivo);
-
-void CreationSocio();
-bool registerUser();
 
 //El color normal de la pantalla es 30
 //El color error es 46
@@ -179,11 +175,6 @@ bool RegistrarEntrenador()
 		}
 	}
 	//Calcular las horas del entrenador
-	for(Dia = 0; Dia < 7; Dia++)
-	{
-		if(NewEntrenador.Dias[Dia-1] != 0)
-			NewEntrenador.HrasPromedio += 8;
-	}
 	system("CLS");
 	int NroSocio;
 	
@@ -220,51 +211,7 @@ bool RegistrarEntrenador()
 	
 	printf("El legajo del nuevo entrenador es \"%i\"", NewEntrenador.Legajo);
 	pause();
-	char Intento;
-	while(true)
-	{
-		printf("* Debera contener al menos una letra mayuscula, una letra minuscula y un numero.\n");
-		printf("* Sólo caracteres alfanumericos.\n");
-		printf("* Debera tener entre 6 y 32 caracteres.\n");
-		printf("* No debe tener mas de 3 caracteres numericos consecutivos.\n");
-		printf("* No debe tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas\n");
-		printf("Ingrese la contrasena del nuevo usuario: ");
-		_flushall();
-		gets(NewEntrenador.contrasena);
-		_flushall();
-		printf("A continuacion se comprobora si la contrasena cumple con los requisitos:\n");
-		
-		
-		if(VerificadorPass(NewEntrenador.contrasena))
-		{
-			//Si la contrasena es aceptada saldra del while
-			break;
-		}
-		else
-		{
-			printf("Quiere volver a intentar? (S)i o (N)o");
-			scanf("%c", &Intento);
-			if(toupper(Intento) == 'S')
-			{
-				printf("Vuelva a ingresar una contrasena\n");
-				pause();
-			}
-			else if(toupper(Intento) == 'N')
-			{
-				printf("Saliendo...\n");
-				pause();
-				return false; //Para salir de la funcion
-			}
-			else
-			{
-				color(46);
-				printf("Error: Opcion ingresada no existe\n");
-				printf("Opcion: \"%c\"\n", Dia);
-				pause();
-				color(30);
-			}
-		}
-	}
+	NewEntrenador.cargaHoraria = 0;
 	system("CLS");
 	EntrenadoresArch = fopen("./Entrenadores.dat", "ab");
 	fwrite(&NewEntrenador, sizeof(NewEntrenador), 1, EntrenadoresArch);
@@ -350,28 +297,14 @@ void CreationSocio()
 }
 
 //Se registra las rutinas de gimnasia
-bool RegistrarTurnos()
+bool RegistrarTurnos(FILE *Arch)
 {
+	
 	struct Turnos Turno;
 	int Si;
-	while(true)
-	{
-		printf("Ingresar la fecha XX/XX/XXXX\n");
-		
-		scanf("%i/%i/%i", &Turno.fecha.Dia, &Turno.fecha.Mes, &Turno.fecha.Anual);
-		if((Turno.fecha.Dia >= 1 && Turno.fecha.Dia <= 31) && (1 <= Turno.fecha.Mes && Turno.fecha.Mes <= 12) && (2023 <= Turno.fecha.Anual && Turno.fecha.Anual <= 9999)){
-			color(46);
-			printf("Error: La fecha esta no tiene sentido\n");
-			printf("Fecha ingresada: %02i/%02i/%04i\n", Turno.fecha.Dia, Turno.fecha.Mes, Turno.fecha.Anual);
-			pause();
-			color(30);
-		}
-		else
-			break;
-	}
+	
 	pause();
 	bool Valido;
-	int legajo;
 	FILE *EntrenadorArch = fopen("Entrenadores.dat", "rb");
 	struct Entrenador Entrenadores;
 	//Se comprueba que el archivo exista
@@ -388,14 +321,15 @@ bool RegistrarTurnos()
 	{
 		while(true)
 		{
-			printf("Ingresar el legajo del entrenador\n");
 			printf("* El legajo ingresado debe ser de un entrenador registrado\n");
+			printf("Ingresar el legajo del entrenador\n");
+			
 			scanf("%i", &Turno.legajoEntrenador);
 			rewind(EntrenadorArch);
 			fread(&Entrenadores, sizeof(Entrenadores), 1, EntrenadorArch);
 			while(!feof(EntrenadorArch))
 			{
-				if(Entrenadores.Legajo == legajo)
+				if(Entrenadores.Legajo == Turno.legajoEntrenador)
 				{
 					printf("El legajo ingresado corresponde a %s\n", Entrenadores.ApelYNom);
 					pause();
@@ -409,7 +343,7 @@ bool RegistrarTurnos()
 			{
 				color(46);
 				printf("Error: No se encontro el legajo ingresado\n");
-				printf("Legajo: %i\n", legajo);
+				printf("Legajo: %i\n", Turno.legajoEntrenador);
 				pause();
 				color(30);
 				printf("Quiere continuar? Si = 1// No != 1\n");
@@ -428,7 +362,7 @@ bool RegistrarTurnos()
 	fclose(EntrenadorArch);
 	system("CLS");
 	//Ahora verificamos si el socio es valido
-	int NroSocio;
+	//La cantidad de socios que se registraran
 	struct Socio Socios;
 	FILE *SociosArch = fopen("Socios.dat", "rb");
 	//Se comprueba que el archivo exista
@@ -446,12 +380,12 @@ bool RegistrarTurnos()
 		{
 			printf("* El numero del socio tiene que estar registrado\n");
 			printf("Ingresar el numero de socio: ");
-			scanf("%i", &NroSocio);
+			scanf("%i", &Turno.nroSocio);
 			rewind(SociosArch);
 			fread(&Socios, sizeof(Socios), 1, SociosArch);
 			while(!feof(SociosArch))
 			{
-				if(Socios.NroSocio == NroSocio)
+				if(Socios.NroSocio == Turno.nroSocio)
 				{
 					printf("El numero de socio corresponde a %s\n", Socios.ApelYNom);
 					pause();
@@ -464,7 +398,7 @@ bool RegistrarTurnos()
 			{
 				color(46);
 				printf("Error: No se encontro numero de socio ingresado\n");
-				printf("Numero de socio: %i\n", NroSocio);
+				printf("Numero de socio: %i\n", Turno.nroSocio);
 				pause();
 				color(30);
 				printf("Quiere continuar? Si = 1// No != 1\n");
@@ -475,304 +409,205 @@ bool RegistrarTurnos()
 					return false;
 			}
 			else
+			{
+				printf("Se ingreso el numero de socio de %s\n", Socios.ApelYNom);
 				break;
+			}
 		}
-	
 	}
 	
 	//Reestablecemos otra vez para comprobar si el entrenador trabaja ese dia
 	Valido = false;
-	int Dia;
+	int eleccion, i;
 	while(!Valido)
 	{
-		printf("Ingresar el dia donde esta ubicado el turno\n");
 		printf("* El dia ingresado debe coincidir con un dia que el entrenador trabaja\n");
+		printf("Ingresar el dia donde esta ubicado el turno\n");
 		printf("Lunes = 1\nMartes = 2\nMiercoles = 3\n");
 		printf("Jueves = 4\nViernes = 5\nSabado = 6\nDomingo = 7\n\n");
 		printf("Ingrese: ");
-		scanf("%i", &Dia);
-		if(Dia >= 1 && Dia <= 7)
+		scanf("%i", &eleccion);
+		switch(eleccion)
 		{
-			
-			pause();
-			if(Entrenadores.Dias[Dia-1] == Dia)
-			{
-				Turno.dia = Dia;
-				//Registramos el dia para el socio
-				Socios.Dias[Dia-1] = Dia;
-				printf("El dia fue exitosamenta registrado\n");
-			}
-			else{
+			case 1:
+				if(Entrenadores.Dias[eleccion-1] == eleccion)
+					Turno.Dia = eleccion;
+				else
+				{
 				//Si el dia del entrenador no coincide
 				color(46);
 				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", Dia);
+				printf("Dia ingresado(numero): %i\n", eleccion);
 				pause();
 				color(30);
-			}
-		}
-		else
-		{
-			color(46);
-			printf("Error: Opcion ingresada no valida\n");
-			printf("Opcion: %i\n", Dia);
-			pause();
-			color(30);
+				}
+				break;
+				
+			case 2:
+				if(Entrenadores.Dias[eleccion-1] == eleccion)
+					Turno.Dia = eleccion;
+				else
+				{
+				//Si el dia del entrenador no coincide
+				color(46);
+				printf("Error: El dia ingresado no coincide con el del entrenador\n");
+				printf("Dia ingresado(numero): %i\n", eleccion);
+				pause();
+				color(30);
+				}
+				break;
+				
+			case 3:
+				if(Entrenadores.Dias[eleccion-1] == eleccion)
+					Turno.Dia = eleccion;
+				else
+				{
+				//Si el dia del entrenador no coincide
+				color(46);
+				printf("Error: El dia ingresado no coincide con el del entrenador\n");
+				printf("Dia ingresado(numero): %i\n", eleccion);
+				pause();
+				color(30);
+				}
+				break;
+			
+			case 4:
+			if(Entrenadores.Dias[eleccion-1] == eleccion)
+					Turno.Dia = eleccion;
+			else
+				{
+				//Si el dia del entrenador no coincide
+				color(46);
+				printf("Error: El dia ingresado no coincide con el del entrenador\n");
+				printf("Dia ingresado(numero): %i\n", eleccion);
+				pause();
+				color(30);
+				}
+				break;
+				
+			case 5:
+			if(Entrenadores.Dias[eleccion-1] == eleccion)
+					Turno.Dia = eleccion;
+				else
+				{
+				//Si el dia del entrenador no coincide
+				color(46);
+				printf("Error: El dia ingresado no coincide con el del entrenador\n");
+				printf("Dia ingresado(numero): %i\n", eleccion);
+				pause();
+				color(30);
+				}
+				break;
+				
+			case 6:
+				if(Entrenadores.Dias[eleccion-1] == eleccion)
+					Turno.Dia = eleccion;
+				else
+				{
+				//Si el dia del entrenador no coincide
+				color(46);
+				printf("Error: El dia ingresado no coincide con el del entrenador\n");
+				printf("Dia ingresado(numero): %i\n", eleccion);
+				pause();
+				color(30);
+				}
+				break;
+				
+			case 7:
+				if(Entrenadores.Dias[eleccion-1] == eleccion)
+					Turno.Dia = eleccion;
+				else
+				{
+				//Si el dia del entrenador no coincide
+				color(46);
+				printf("Error: El dia ingresado no coincide con el del entrenador\n");
+				printf("Dia ingresado(numero): %i\n", eleccion);
+				pause();
+				color(30);
+				}
+				break;
+			
+			default:
+				color(46);
+				printf("Error: Opcion ingresada no valida\n");
+				printf("Opcion: %i\n", eleccion);
+				pause();
+				color(30);
+				break;
+
 		}
 	}
 	fclose(SociosArch);
+	Valido = false;
+	while(!Valido)
+	{
+		printf("A continuacion aqui estan los horarios\n");
+		printf("1. 8:00 A 10:00\n");
+		printf("2. 10:00 A 12:00\n");
+		printf("3. 01:00 A 03:00\n");
+		printf("4. 03:00 A 05:00\n");
+		printf("5. 05:00 A 07:00\n");
+		printf("6. 07:00 A 09:00\n");
+		printf("7. 09:00 A 11:00\n");
+		printf("Ingrese su opcion: ");
+		scanf("%i", &eleccion);
+		switch(eleccion)
+		{
+			case 1:
+				Turno.HoraInicial = 8;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador);
+				if(!Valido)
+					return false;
+				break;
+			case 2:
+				Turno.HoraInicial = 10;
+				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
+					return false;
+				break;
+			case 3:
+				Turno.HoraInicial = 1;
+				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
+					return false;
+				break;
+			case 4:
+				Turno.HoraInicial = 3;
+				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
+					return false;
+				break;
+			case 5:
+				Turno.HoraInicial = 5;
+				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
+					return false;
+				break;
+			case 6:
+				Turno.HoraInicial = 7;
+				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
+					return false;
+				break;
+			case 7:
+				Turno.HoraInicial = 9;
+				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
+					return false;
+				break;
+			default:
+				color(46);
+				printf("Error: Opcion ingresada no valida\n");
+				printf("Opcion: %i\n", eleccion);
+				pause();
+				color(30);
+				break;
+		}
+		if(Valido)
+			break;
+		else
+			printf("");
+	
+	}
 	color(02);
-	FILE *TurnosArch = fopen("./Turnos.dat", "ab");
-	fwrite(&Turno, sizeof(Turno), 1, TurnosArch);
-	fclose(TurnosArch);
+	fwrite(&Turno, sizeof(Turno), 1, Arch);
 	printf("\nSe registro exitosamente la rutina\n");
 	pause();
 	color(30);
-}
-
-bool VerificadorUserUser(char Usuario[50], FILE *Archivo)
-{ 	
-
-	//Verificar si el dato ingresado es correcto
-	printf("Su usuario se esta verificando.");
-	if(!(strlen(Usuario) >= 6))
-	{
-		color(46);
-		printf("\nError: El usuario ingresado tiene un tamano menor a 6 caracteres\n");
-		printf("Cantidad de caracteres ingresado: %i\n", strlen(Usuario));
-		pause();
-		color(30);
-		return false;
-	}
-	else if(!(strlen(Usuario) <= 10))
-	{
-		color(46);
-		printf("\nError: El usuario ingresado tiene un tamano menor a 6 caracteres\n");
-		printf("Cantidad de caracteres ingresado: %i\n", strlen(Usuario));
-		pause();
-		color(30);
-
-		return false;
-	}
-
-
-	/*Comprueba si la primera letra es minuscula*/
-	if(!iswlower(Usuario[0]))
-	{
-		color(46);
-		printf("\nError: El nombre ingresado no empieza con minuscula\n");
-
-		pause();
-		color(30);
-		return false;
-	}
-
-	printf(".");
-	int i;
-	int May; //Cantidad de mayusculas
-	int digitos; //Cantidad de digitos
-	for(i = 0, May = 0, digitos = 0; i < strlen(Usuario); i++)
-	{
-		May += (iswupper(Usuario[i]))? 1: 0; //Si es mayuscula se le agrega uno
-		digitos += (isdigit(Usuario[i]))? 1: 0; //Si es un digito se agrega uno
-	}
-	if(!(digitos <= 3))
-	{ 
-		//Si el nombre tiene mas de 3 digitos aparece un error
-		color(46);
-		printf("\nError: El nombre tiene mas digitos de lo que se permite(3)\n");
-		printf("Cantidad de digitos: %i\n", digitos);
-
-		pause();
-		color(30);
-		return false;
-	}
-
-	if(!(May >= 2))
-	{ 
-		//Si el nombre tiene menos de 2 mayusculas aparece un error
-		color(46);
-		printf("\nError: El nombre tiene menos mayusculas que las que permiten(2)\n");
-		printf("\nCantidad de mayusculas: %i\n", May);
-
-		pause();
-		color(30); 
-		return false;
-	}
-	
-	FILE *UserArch;
-	struct Usuario NewUser;
-	rewind(UserArch);
-	//Comprobar si existe el archivos Usuarios.dat
-	fread(&NewUser, sizeof(NewUser), 1, UserArch); 
-	//Comprueba si el usuario ya existe dentro del archivo
-	printf(".");
-	while(!feof(Archivo))
-	{
-			
-		if(strcmp(NewUser.usuario, Usuario) == 0)
-		{
-			//Aparece un error si el usuario ya existe en el archivo "Usuarios.dat"
-			color(46);
-			printf("\nError: El usuario ingresado ya existe\n");
-
-			pause();
-			color(30);
-			return false;
-		}
-			fread(&NewUser, sizeof(NewUser), 1, Archivo);
-	}
-	//Si ha pasado todas las condiciones la contrasena es apta para uso
-	
-	color(02);
-	printf("\nEl usuario cumple no tuvo ningun error!!!\n");
-	pause();
-	color(30);
-	return true;
-}
-
-bool VerificadorPass(char contra[50])
-{
-	printf("Su contrasena se esta verificando.");
-	int i;
-	bool minuscula, mayuscula, numero; 
-	//Comprobar si tiene minuscula, mayuscula y numero respectivamente
-
-	int contador = 0;
-	for(i = 0, mayuscula = 0, minuscula = 0, numero = 0;i < strlen(contra); i++)
-	{
-		if(!(iswalnum(contra[i])))
-		{
-		//comprueba si no hay espacion ni signos de puntuacion
-
-		color(46);
-
-		printf("\nError: Uno/s de los caracteres ingresados no es caracter alfanumerico\n");
-		printf("Caracter no alfanumerico encontrado: %c\n", contra[i]);
-		pause();
-
-		color(30);
-		return false;
-		}
-		
-		if(isdigit(contra[i]))
-		{
-			numero = true;
-
-			/* Comprueba si el siguiente numero es seguido o no
-			Antes comprueba que elemento i+1 exista para no
-			generar ningun error */
-			if(i+1 < strlen(contra) && contra[i] == contra[i+1] - 1)
-			{
-				contador++;
-			}
-			else
-			{
-				contador = 0;
-			}
-			
-			if(contador > 2)
-			{
-				color(46);
-
-				printf("\nError: La contrasena tiene 3 o mas numeros consecutivos\n");
-				printf("Sucesion numerica encontrada: \"%c%c%c%c\"\n", contra[i-2], contra[i-1], contra[i], contra[i+1]);
-				pause();
-
-				color(30);
-				return false;
-			}
-			
-		}
-		else
-		{
-			minuscula = (minuscula || iswlower(contra[i]))? true: false;
-			mayuscula = (mayuscula || iswupper(contra[i]))? true: false;
-			if(i+1 < strlen(contra) && toupper(contra[i]) == toupper(contra[i+1]-1)){
-				color(46);
-
-				printf("\nError: La contrasena tiene 2 letras consecutivas\n");
-				printf("Sucesion alfabetica encontrada: \"%c%c\"\n", contra[i], contra[i+1]);
-				pause();
-
-				color(30);
-				return false;
-			}
-		}
-		/* Comprueba si la caracter es minuscula mayuscula o un numero
-		Si ya tiene uno de esto ya la condicion es verdadera
-		asi que no se necesita volver a verificar */
-		
-	printf(".");
-	}
-
-	printf("%s", contra);
-	if(!minuscula)
-	{
-		//Si no hay minusculas
-		color(46);
-
-		printf("\nError: Su contrasena no contiene ninguna minuscula\n");
-		pause();
-		color(30);
-		return false;
-	}
-	else if(!mayuscula)
-	{
-		//Si no hay mayusculas
-		color(46);
-
-		printf("\nError: Su contrasena no contiene ninguna mayuscula\n");
-		pause();
-		color(30);
-		return false;
-	}
-
-	else if(!numero)
-	{
-		//Si no hay numeros
-		color(46);
-
-		printf("\nError: Su contrasena no contiene ningun numero\n");
-		pause();
-		color(30);
-		return false;
-	}
-
-	printf(".");
-
-	if(strlen(contra) < 6)
-	{
-		//Si es menor a 6 caracteres
-		color(46);
-
-		printf("\nError: Su contrasena es contiene menos de los caracteres indicados(6)\n");
-		printf("Cantidad de caracteres: %i\n", strlen(contra));
-		pause();
-		color(30);
-
-		return false;
-	}
-	else if(strlen(contra) > 32)
-	{
-		//Si es mas de 32 caracteres
-		color(46);
-
-		printf("\nError: Su contrasena es contiene mas de los caracteres indicados(32)\n");
-		printf("Cantidad de caracteres: %i\n", strlen(contra));
-		pause();
-		color(30);
-
-		return false;
-	}
-
-	//Si ha pasado todas las condiciones la contrasena es apta para uso
-	color(02);
-	printf("\nLa contrasena cumple no tuvo ningun error!!!\n")
-	pause();
-	color(30);
-	return true;
-
 }
 
 #endif
