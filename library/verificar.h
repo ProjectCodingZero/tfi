@@ -80,7 +80,7 @@ bool VerificadorUserUser(char Usuario[50], FILE *Archivo)
 	}
 	
 	struct Usuario NewUser;
-	rewind(UserArch);
+	rewind(Archivo);
 	//Comprobar si existe el archivos Usuarios.dat
 	fread(&NewUser, sizeof(NewUser), 1, Archivo); 
 	//Comprueba si el usuario ya existe dentro del archivo
