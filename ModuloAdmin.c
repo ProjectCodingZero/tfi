@@ -46,6 +46,7 @@ void main()
 			registerUser(Arch);
 			fclose(Arch);
 			break;
+			
 		case 2:
 			printf("Bienvenido al registro de usuario nuevo(Administracion)\n");
 			pause();
@@ -53,6 +54,7 @@ void main()
 			registerUser(Arch);
 			fclose(Arch);
 			break;
+			
 		case 3:
 			printf("Bienvenido al registro de usuario nuevo(Gym)\n");
 			pause();
@@ -60,16 +62,19 @@ void main()
 			registerUser(Arch);
 			fclose(Arch);
 			break;
+			
         case 4:
          	printf("Bienvenido al registro de socio nuevo\n");
          	pause();
          	CreationSocio();
          	break;
+         	
         case 5:
          	printf("Bienvenido al registro de entrenador nuevo\n");
          	pause();
          	RegistrarEntrenador();
          	break;
+         	
          case 6:
          	printf("Bienvenido al registro de turno nuevo\n");
          	pause();
@@ -77,6 +82,7 @@ void main()
          	RegistrarTurnos(Arch);
          	fclose(Arch);
          	break;
+         	
          case 7: 
          	printf("Bienvenido al listado de los usuarios(Recepcion)\n");
          	Arch = fopen("./UsuariosRec.dat", "rb");
@@ -96,6 +102,7 @@ void main()
          		ListadoUsuariosAdmin(Arch);
          	}
          	break;
+         	
          case 8:
          	printf("Bienvenido al listado de los usuarios(Administracion)\n");
          	Arch = fopen("./UsuariosAdm.dat", "rb");
@@ -114,6 +121,7 @@ void main()
          		ListadoUsuariosAdmin(Arch);
          	}
          	break;
+         	
          case 9:
          	printf("Bienvenido al listado de los usuarios(Gym)\n");
          	Arch = fopen("./UsuariosGym.dat", "rb");
@@ -131,30 +139,38 @@ void main()
          	{
          		ListadoUsuariosAdmin(Arch);
          	}
+         	break;
+         	
          case 10:
             printf("Bienvenido al listado de los socios\n");
          	pause();
          	ListadoSocios();
          	break;
+         	
          case 11:
          	printf("Bienvenido al listado de los entrenadores\n");
          	ListadoEntrenadorAdmin();
          	break;
+         	
          case 12:
           	printf("Bienvenido al listado de los turnos\n");
          	ListadoTurnos();
          	break;
+         	
          case 13:
          	printf("\nA continuacion se cerrara la aplicacion\n");
          	pause();
          	exit(0);
          	break;
+         	
          default:
          	color(46);
 			printf("\nError: La opcion ingresada no existe\n");
 			pause();
 			color(30);
             break;
+            
       }
+      
    }
 }
