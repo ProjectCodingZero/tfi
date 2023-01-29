@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "library.h"
 #define color(c); system("COLOR " #c);
 #define pause(); system("PAUSE"); system("CLS");
@@ -90,7 +91,7 @@ void ListadoEntrenadorAdmin(){
 			printf("Los dias que trabaja:\n");
 			for(Dia = 0; Dia < 7; Dia++)
 			{
-				printf("Numero owo: %i\n\n", Entrenadores.Dias[Dia])
+				printf("Numero owo: %i\n\n", Entrenadores.Dias[Dia]);
 				if(Entrenadores.Dias[Dia] == 1)
 					printf("Lunes\n");
 				else if(Entrenadores.Dias[Dia] == 2)
