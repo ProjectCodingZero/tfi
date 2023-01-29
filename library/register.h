@@ -276,8 +276,10 @@ void CreationSocio()
 	while(true)
 	{
 		printf("Ingrese la fecha de ingreso XX/XX/XXXX\n");
+		_flushall();
 		scanf("%i/%i/%i", &NewSocio.FechaIng.Dia, &NewSocio.FechaIng.Mes, &NewSocio.FechaIng.Anual);
-		if(!((1 <= NewSocio.FechaIng.Dia && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (2020 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 2023))){
+		if(!((1 <= NewSocio.FechaIng.Dia && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (2020 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 2023)))
+		{
 			color(46);
 			printf("Error: La fecha ingresa es invalida\n");
 			printf("Fecha ingresada: %02i/%02i/%04i\n", NewSocio.FechaIng.Dia, NewSocio.FechaIng.Mes, NewSocio.FechaIng.Anual);
