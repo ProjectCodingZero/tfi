@@ -157,7 +157,7 @@ bool RegistrarEntrenador()
 		printf("Jueves = 4\nViernes = 5\nSabado = 6\nDomingo = 7\n");
 		printf("Salir = 0\n\n");
 		scanf("%i", &Dia);
-		if(Dia >= 0 && Dia <= 7)
+		if(Dia > 0 && Dia <= 7)
 		{
 			NewEntrenador.Dias[Dia-1] = Dia;
 			printf("Se registro correctamente el dia\n");
@@ -278,7 +278,7 @@ void CreationSocio()
 		printf("Ingrese la fecha de ingreso XX/XX/XXXX\n");
 		_flushall();
 		scanf("%i/%i/%i", &NewSocio.FechaIng.Dia, &NewSocio.FechaIng.Mes, &NewSocio.FechaIng.Anual);
-		if(!((1 <= NewSocio.FechaIng.Dia && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (2020 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 2023)))
+		if(!((1 <= NewSocio.FechaIng.Dia && NewSocio.FechaIng.Dia <= 31) && (1 <= NewSocio.FechaIng.Mes && NewSocio.FechaIng.Mes <= 12) && (2000 <= NewSocio.FechaIng.Anual && NewSocio.FechaIng.Anual <= 2023)))
 		{
 			color(46);
 			printf("Error: La fecha ingresa es invalida\n");
@@ -348,7 +348,7 @@ bool RegistrarTurnos(FILE *Arch)
 				printf("Legajo: %i\n", Turno.legajoEntrenador);
 				pause();
 				color(30);
-				printf("Quiere continuar? Si = 1// No != 1\n");
+				printf("Quiere continuar? Si == 1 // No != 1\n");
 				scanf("%i", &Si);
 				if(Si == 1)
 					printf("");
@@ -432,7 +432,7 @@ bool RegistrarTurnos(FILE *Arch)
 		switch(eleccion)
 		{
 			case 1:
-				if(Entrenadores.Dias[eleccion-1] == eleccion)
+				if(Entrenadores.Dias[eleccion-1] != 0)
 					Turno.Dia = eleccion;
 				else
 				{
@@ -446,7 +446,7 @@ bool RegistrarTurnos(FILE *Arch)
 				break;
 				
 			case 2:
-				if(Entrenadores.Dias[eleccion-1] == eleccion)
+				if(Entrenadores.Dias[eleccion-1] != 0)
 					Turno.Dia = eleccion;
 				else
 				{
@@ -460,7 +460,7 @@ bool RegistrarTurnos(FILE *Arch)
 				break;
 				
 			case 3:
-				if(Entrenadores.Dias[eleccion-1] == eleccion)
+				if(Entrenadores.Dias[eleccion-1] != 0)
 					Turno.Dia = eleccion;
 				else
 				{
@@ -474,9 +474,9 @@ bool RegistrarTurnos(FILE *Arch)
 				break;
 			
 			case 4:
-			if(Entrenadores.Dias[eleccion-1] == eleccion)
+				if(Entrenadores.Dias[eleccion-1] != 0)
 					Turno.Dia = eleccion;
-			else
+				else
 				{
 				//Si el dia del entrenador no coincide
 				color(46);
@@ -488,7 +488,7 @@ bool RegistrarTurnos(FILE *Arch)
 				break;
 				
 			case 5:
-			if(Entrenadores.Dias[eleccion-1] == eleccion)
+				if(Entrenadores.Dias[eleccion-1] != 0)
 					Turno.Dia = eleccion;
 				else
 				{
@@ -502,7 +502,7 @@ bool RegistrarTurnos(FILE *Arch)
 				break;
 				
 			case 6:
-				if(Entrenadores.Dias[eleccion-1] == eleccion)
+				if(Entrenadores.Dias[eleccion-1] != 0)
 					Turno.Dia = eleccion;
 				else
 				{
@@ -516,7 +516,7 @@ bool RegistrarTurnos(FILE *Arch)
 				break;
 				
 			case 7:
-				if(Entrenadores.Dias[eleccion-1] == eleccion)
+				if(Entrenadores.Dias[eleccion-1] != 0)
 					Turno.Dia = eleccion;
 				else
 				{
