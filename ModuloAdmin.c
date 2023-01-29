@@ -71,10 +71,10 @@ void main()
          	RegistrarEntrenador();
          	break;
          case 6:
-         	printf("Bienvenido al registro de entrenador nuevo\n");
+         	printf("Bienvenido al registro de turno nuevo\n");
          	pause();
          	Arch = fopen("Turnos.dat", "a+b");
-         	RegistrarTurnos();
+         	RegistrarTurnos(Arch);
          	fclose(Arch);
          	break;
          case 7: 

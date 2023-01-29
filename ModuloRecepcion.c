@@ -102,7 +102,7 @@ void main()
          case 3:
          	printf("Bievenido al listado de socios\n");
          	pause();
-         	ListadoSocios()
+         	ListadoSocios();
          	break;
          case 4:
          	//------

@@ -72,6 +72,7 @@ void main()
 				break;
         }
    	}
+   	fclose(Arch);
 	//Si ha iniciado seccion
    	while(true)
    	{
@@ -91,8 +92,9 @@ void main()
          	break;
          case 2:
          	printf("\nHa ingresado a al registrar rutinas\n");
-         	pause();
-         	RegistrarTurnos();
+         	Arch = fopen("Turnos.dat", "a+b");
+         	RegistrarTurnos(Arch);
+         	fclose(Arch);
          	break;
          case 3:
          	printf("\nHa continuacion se cerrara la aplicacion\n");
