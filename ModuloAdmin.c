@@ -113,6 +113,7 @@ void main()
          	{
          		ListadoUsuariosAdmin(Arch);
          	}
+         	break;
          case 9:
          	printf("Bienvenido al listado de los usuarios(Gym)\n");
          	Arch = fopen("./UsuariosGym.dat", "rb");
