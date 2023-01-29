@@ -90,39 +90,21 @@ void ListadoEntrenadorAdmin(){
 			printf("Los dias que trabaja:\n");
 			for(Dia = 0; Dia < 7; Dia++)
 			{
-				switch(Dia)
-				{
-					case 1:
-						if(Entrenadores.Dias[Dia] == 1)
-							printf("Lunes\n");
-						break;
-					case 2:
-						if(Entrenadores.Dias[Dia] == 2)
-							printf("Martes\n");
-						break;
-					case 3:
-						if(Entrenadores.Dias[Dia] == 3)
-							printf("Miercoles\n");
-						break;
-					case 4:
-						if(Entrenadores.Dias[Dia] == 4)
-							printf("Jueves\n");
-						break;
-					case 5:
-						if(Entrenadores.Dias[Dia] == 5)
-							printf("Viernes\n");
-						break;
-					case 6:
-						if(Entrenadores.Dias[Dia] == 6)
-							printf("Sabado\n");
-						break;
-					case 7:
-						if(Entrenadores.Dias[Dia] == 7)
-							printf("Domingo\n");
-						break;
-					default:
-						break;
-				}
+				printf("Numero owo: %i\n\n", Entrenadores.Dias[Dia])
+				if(Entrenadores.Dias[Dia] == 1)
+					printf("Lunes\n");
+				else if(Entrenadores.Dias[Dia] == 2)
+					printf("Martes\n");
+				else if(Entrenadores.Dias[Dia] == 3)
+					printf("Miercoles\n");
+				else if(Entrenadores.Dias[Dia] == 4)
+					printf("Jueves\n");
+				else if(Entrenadores.Dias[Dia] == 5)
+					printf("Viernes\n");
+				else if(Entrenadores.Dias[Dia] == 6)
+					printf("Sabado\n");
+				else if(Entrenadores.Dias[Dia] == 7)
+					printf("Domingo\n");
 			}
 			
 			pause();
