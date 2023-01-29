@@ -73,7 +73,9 @@ void main()
          case 6:
          	printf("Bienvenido al registro de entrenador nuevo\n");
          	pause();
+         	Arch = fopen("Turnos.dat", "a+b");
          	RegistrarTurnos();
+         	fclose(Arch);
          	break;
          case 7: 
          	printf("Bienvenido al listado de los usuarios(Recepcion)\n");
