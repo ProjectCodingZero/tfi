@@ -85,6 +85,7 @@ void main()
          	{
          		color(46);
 				printf("\nERROR :: NO EXISTE EL ARCHIVO \"UsuariosRec.dat\"\n");
+				//ss
 				pause();
 				fclose(Arch);
 				color(07);
