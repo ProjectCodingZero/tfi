@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "./library/Login.h"
 #include "./library/Register.h"
 #include "./library/library.h"
 #include "./library/listado.h"
+#include "./library/verificar.h"
 #define pause(); system("PAUSE"); system("CLS");
 #define color(c); system("COLOR " #c);
 //El color normal de la pantalla es 30
@@ -18,6 +18,7 @@ void main()
    	system("CLS");
    	color(30);
    	int Rta;
+   	int actividad;
    	FILE *Arch = fopen("./UsuariosRec.dat", "rb");
    	if(Arch == NULL)
    	{
@@ -74,6 +75,7 @@ void main()
         	}
    		}
    	}
+   	fclose(Arch);
 	//Si ha iniciado seccion
    while(true)
    {
@@ -84,30 +86,50 @@ void main()
       	printf("2.- Registrar Actividades de Socios.\n");
       	printf("3.- Listados de Socios.\n");
       	printf("4.- Listado de fechas de pagos.\n");
+      	printf("5.- Listado de turnos por actividad\n");
       	printf("5.- Cerrar la aplicación.\n\n");
       	printf("Ingresar una opcion: ");
       	scanf("%i", &Rta);
       	switch(Rta)
       	{
          case 1:
-         	printf("Bievenido a la creacion de socio\n");
+         	printf("Ha ingresado a la creacion de socio\n");
          	pause();
             CreationSocio();
             break;
          case 2:
-            printf("Bievenido al registro de actividades de un socio\n");
+            printf("Ha ingresado al registro de actividades de un socio\n");
          	pause();
-         	RegistrarActiviades();
+         	Arch = fopen("Turnos.dat", "a+b");
+         	RegistrarTurnos(Arch);
+         	fclose(Arch);
          	break;
          case 3:
-         	printf("Bievenido al listado de socios\n");
+         	printf("Ha ingresado al listado de socios\n");
          	pause();
          	ListadoSocios();
          	break;
          case 4:
-         	//------
+        	printf("Ha ingresado a fechas de pago\n");
+         	pause();
+         	FechaPago();
          	break;
          case 5:
+         	printf("Ha ingresado al listado por actividad\n");
+         	printf("Ingrese la actividad que desea buscar\n");
+         	printf("1 = Zumba\n2 = Spining\n3 = Pilate\n");
+         	scanf("%i", &actividad);
+         	if(1 <= actividad && actividad <= 3)
+         		ListadoPorAct(actividad);
+         	else
+         	{
+         		color(46);
+				printf("\nError: La opcion ingresada no existe\n");
+				pause();
+				color(30);
+           	 	break;
+         	}
+         case 6:
         	printf("\nA continuacion se cerrara la aplicacion\n");
          	pause();
          	exit(0);

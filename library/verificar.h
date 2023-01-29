@@ -9,9 +9,40 @@
 #include <string.h>
 #define color(c); system("COLOR " #c);
 #define pause(); system("PAUSE"); system("CLS");
+
+
+bool loginUser(char usuario[50], char contrasena[50], char Nombre[60], FILE *UserArch)
+{
+	system("CLS");
+	//El inicio de sesion
+	struct Usuario User; //El usuario que va a ingresar
+
+	//Si el archivo existe procede a verificar si el usuario existe
+	rewind(UserArch);
+	fread(&User, sizeof(User), 1, UserArch);
+	while(!feof(UserArch))
+	{
+		if( (strcmp(User.usuario, usuario) == 0) && (strcmp(User.contrasena, contrasena) == 0) )
+		{
+			printf("El usuario a ingresado con exito\n");
+			Nombre = User.ApelYNom;
+			fclose(UserArch);
+			return true;
+		}
+		else
+		{
+			fread(&User, sizeof(User), 1, UserArch);
+		}
+	}
+	printf("\nEl nombre y contrasena ingresados no pertenecen a ningun usuario\n");
+	pause();
+	return false;
+}
+
+
 bool VerificadorUserUser(char Usuario[50], FILE *Archivo)
 { 	
-
+	system("CLS");
 	//Verificar si el dato ingresado es correcto
 	printf("Su usuario se esta verificando.");
 	if(!(strlen(Usuario) >= 6))
@@ -111,6 +142,7 @@ bool VerificadorUserUser(char Usuario[50], FILE *Archivo)
 
 bool VerificadorPass(char contra[50])
 {
+	system("CLS");
 	printf("Su contrasena se esta verificando.");
 	int i;
 	bool minuscula, mayuscula, numero; 
@@ -253,23 +285,39 @@ bool VerificadorPass(char contra[50])
 
 }
 
-bool VerficiarRutina(FILE *arch, int Dia, int horario, int legajoEntrenador)
+bool VerficiarRutina(FILE *arch, int Dia, int horario, int legajoEntrenador, int actividad)
 {
 	struct Turnos ElTurno;
 	rewind(arch);
 	fread(&ElTurno, sizeof(ElTurno), 1, arch);
 	while(!feof(arch))
 	{
-		if((ElTurno.Dia == Dia && ElTurno.HoraInicial == horario) && ElTurno.legajoEntrenador == legajoEntrenador)
+		if((ElTurno.Dia == Dia && ElTurno.HoraInicial == horario && actividad == ElTurno.Actividad) && ElTurno.legajoEntrenador == legajoEntrenador)
 			return true;
-		else if(!((ElTurno.Dia == Dia && ElTurno.HoraInicial == horario) && ElTurno.legajoEntrenador != legajoEntrenador))
+		else if((ElTurno.Dia == Dia && ElTurno.HoraInicial && actividad == ElTurno.Actividad) && ElTurno.legajoEntrenador != legajoEntrenador)
 		{
 			color(46);
 			printf("Error: Un entrenador diferente ya tiene ocupado ese horario\n");
 			
 			printf("Legajo Ingresado: %i\n", legajoEntrenador);
+			printf("Actividad: ");
+			switch(actividad)
+			{
+				case 1:
+					printf("Zumba\n");
+					break;
+				case 2:
+					printf("Spining\n");
+					break;
+				case 3:
+					printf("Pilate\n");
+					break;
+				default: 
+					break;
+			}
 			printf("Dia: %s\n", Dia);
 			printf("Horario Ingresado: %02i:00 - %02i:00\n", horario, horario+2);
+			
 			pause();
 			color(30);
 			return false;
@@ -278,7 +326,7 @@ bool VerficiarRutina(FILE *arch, int Dia, int horario, int legajoEntrenador)
 	}
 	//Si no hay entrenador registrado en ese horario se sigue
 	//Se le agrega la carga horario al archivo de los entrenadores
-
+	system("CLS");
 	struct Entrenador Entrenador; //El entrenador que se le agrega la carga horaria
 	FILE *EntrenadorArch = fopen("Entrenadores.dat", "rb");
 	fread(&Entrenador, sizeof(Entrenador), 1, EntrenadorArch);

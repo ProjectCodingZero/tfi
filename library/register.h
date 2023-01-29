@@ -34,7 +34,7 @@ _flushall(); gets(Texto); _flushall();
 //El color error es 46
 //El color de salida por error es 07
 //El color de function exitosa es 02
-bool registerUser(FILE *Archivo)
+void registerUser(FILE *Archivo)
 {
 	char Intento;
 	color(30);
@@ -69,7 +69,7 @@ bool registerUser(FILE *Archivo)
 			if(toupper(Intento) != 'S')
 			{
 				pause();
-				return false; //Para salir de la funcion
+				return; //Para salir de la funcion
 				
 			}
 			else
@@ -113,7 +113,7 @@ bool registerUser(FILE *Archivo)
 			{
 				printf("Saliendo...\n");
 				pause();
-				return false; //Para salir de la funcion
+				return; //Para salir de la funcion
 			}
 			else
 			{
@@ -135,7 +135,7 @@ bool registerUser(FILE *Archivo)
 
 
 //Para crear un entrenador
-bool RegistrarEntrenador()
+void RegistrarEntrenador()
 {
 	srand(time(NULL));
 	system("CLS");
@@ -143,37 +143,8 @@ bool RegistrarEntrenador()
 	struct Entrenador NewEntrenador;
 	printf("Ingresar el nombre del nuevo entrenador\n");
 	IngresarChar("Nombre Completo", NewEntrenador.ApelYNom, "entrenador");
-	int Dia;
 	
-	//Todos los dias se ponen en cero para que el listado de entrenadores
-	for(Dia = 0; Dia < 7; Dia++)
-		NewEntrenador.Dias[Dia] = 0;
-	
-	Dia = 1;
-	while(Dia != 0)
-	{
-		printf("Ingresar el dia donde el entrenador trabajo\n");
-		printf("Lunes = 1\nMartes = 2\nMiercoles = 3");
-		printf("Jueves = 4\nViernes = 5\nSabado = 6\nDomingo = 7\n");
-		printf("Salir = 0\n\n");
-		scanf("%i", &Dia);
-		if(Dia > 0 && Dia <= 7)
-		{
-			NewEntrenador.Dias[Dia-1] = Dia;
-			printf("Se registro correctamente el dia\n");
-			pause();
-		}
-		else if(Dia == 0)
-			break;
-		else
-		{
-			color(46);
-			printf("Error: Opcion ingresada no existe\n");
-			printf("Opcion: %i\n", Dia);
-			pause();
-			color(30);
-		}
-	}
+
 	//Calcular las horas del entrenador
 	system("CLS");
 	int NroSocio;
@@ -212,39 +183,42 @@ bool RegistrarEntrenador()
 	printf("El legajo del nuevo entrenador es \"%i\"", NewEntrenador.Legajo);
 	pause();
 	NewEntrenador.cargaHoraria = 0;
-	system("CLS");
 	EntrenadoresArch = fopen("./Entrenadores.dat", "ab");
 	fwrite(&NewEntrenador, sizeof(NewEntrenador), 1, EntrenadoresArch);
 	fclose(EntrenadoresArch);
 	printf("El nuevo entrenador fue registrado con exito\n");
 	pause();
-	return true;
+	return;
 }
 
 
 //Para crear un socio
 void CreationSocio()
 {	
-	system("CLS");
+	srand(time(NULL));
 	struct Socio NewSocio; 
 	color(30);
-	printf("Bienvenido a la creacion de socio\n");
-	pause();
-	
+	system("CLS");
 	//Se ingresa el nombre y apellido
 	IngresarChar("Nombre", NewSocio.ApelYNom, "socio");
+	system("CLS");
 	//Se ingresa el celular
 	IngresarNumero("Celular", NewSocio.Celular, "socio");
+	system("CLS");
 	//Se ingresa el dni
 	IngresarNumero("DNI", NewSocio.DNI, "socio");
+	system("CLS");
 	//Se ingresa las indicaciones medicas
-	int i, rta = 15;
+	int i;
 	IngresarChar("Indicaciones Medicas", NewSocio.IndMedicas, "socio");
+	system("CLS");
 	//Se ingresa la altura
 	IngresarNumero("Altura", NewSocio.Altura, "socio");
+	system("CLS");
 	//Se ingresa el peso
 	IngresarNumero("Peso", NewSocio.Altura, "socio");
-	srand(time(NULL));
+	system("CLS");
+	
 	FILE *SociosArch = fopen("./Socios.dat", "rb");
 	
 	// Se abre el archivo para comprobar que el numero de socio no es repetido
@@ -289,7 +263,7 @@ void CreationSocio()
 		else
 			break;
 	}
-	
+	pause();
 	SociosArch = fopen("Socios.dat", "ab");
 	fwrite(&NewSocio, sizeof(NewSocio), 1, SociosArch);
 	fclose(SociosArch);
@@ -299,7 +273,7 @@ void CreationSocio()
 }
 
 //Se registra las rutinas de gimnasia
-bool RegistrarTurnos(FILE *Arch)
+void RegistrarTurnos(FILE *Arch)
 {
 	
 	struct Turnos Turno;
@@ -325,7 +299,7 @@ bool RegistrarTurnos(FILE *Arch)
 		{
 			printf("* El legajo ingresado debe ser de un entrenador registrado\n");
 			printf("Ingresar el legajo del entrenador\n");
-			
+			system("CLS");
 			scanf("%i", &Turno.legajoEntrenador);
 			rewind(EntrenadorArch);
 			fread(&Entrenadores, sizeof(Entrenadores), 1, EntrenadorArch);
@@ -353,7 +327,7 @@ bool RegistrarTurnos(FILE *Arch)
 				if(Si == 1)
 					printf("");
 				else
-					return false;
+					return;
 			}
 			else
 				break;
@@ -384,6 +358,7 @@ bool RegistrarTurnos(FILE *Arch)
 			printf("Ingresar el numero de socio: ");
 			scanf("%i", &Turno.nroSocio);
 			rewind(SociosArch);
+			system("CLS");
 			fread(&Socios, sizeof(Socios), 1, SociosArch);
 			while(!feof(SociosArch))
 			{
@@ -408,7 +383,7 @@ bool RegistrarTurnos(FILE *Arch)
 				if(Si == 1)
 					printf("");
 				else
-					return false;
+					return;
 			}
 			else
 			{
@@ -417,180 +392,101 @@ bool RegistrarTurnos(FILE *Arch)
 			}
 		}
 	}
+	fclose(SociosArch);
 	
-	//Reestablecemos otra vez para comprobar si el entrenador trabaja ese dia
-	Valido = false;
-	int eleccion, i;
-	while(!Valido)
+	while(true)
 	{
-		printf("* El dia ingresado debe coincidir con un dia que el entrenador trabaja\n");
 		printf("Ingresar el dia donde esta ubicado el turno\n");
 		printf("Lunes = 1\nMartes = 2\nMiercoles = 3\n");
 		printf("Jueves = 4\nViernes = 5\nSabado = 6\nDomingo = 7\n\n");
 		printf("Ingrese: ");
-		scanf("%i", &eleccion);
-		switch(eleccion)
+		scanf("%i", &Turno.Dia);
+		system("CLS");
+		if(1 <= Turno.Dia && Turno.Dia <= 7)
 		{
-			case 1:
-				if(Entrenadores.Dias[eleccion-1] != 0)
-					Turno.Dia = eleccion;
-				else
-				{
-				//Si el dia del entrenador no coincide
-				color(46);
-				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", eleccion);
-				pause();
-				color(30);
-				}
-				break;
-				
-			case 2:
-				if(Entrenadores.Dias[eleccion-1] != 0)
-					Turno.Dia = eleccion;
-				else
-				{
-				//Si el dia del entrenador no coincide
-				color(46);
-				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", eleccion);
-				pause();
-				color(30);
-				}
-				break;
-				
-			case 3:
-				if(Entrenadores.Dias[eleccion-1] != 0)
-					Turno.Dia = eleccion;
-				else
-				{
-				//Si el dia del entrenador no coincide
-				color(46);
-				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", eleccion);
-				pause();
-				color(30);
-				}
-				break;
-			
-			case 4:
-				if(Entrenadores.Dias[eleccion-1] != 0)
-					Turno.Dia = eleccion;
-				else
-				{
-				//Si el dia del entrenador no coincide
-				color(46);
-				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", eleccion);
-				pause();
-				color(30);
-				}
-				break;
-				
-			case 5:
-				if(Entrenadores.Dias[eleccion-1] != 0)
-					Turno.Dia = eleccion;
-				else
-				{
-				//Si el dia del entrenador no coincide
-				color(46);
-				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", eleccion);
-				pause();
-				color(30);
-				}
-				break;
-				
-			case 6:
-				if(Entrenadores.Dias[eleccion-1] != 0)
-					Turno.Dia = eleccion;
-				else
-				{
-				//Si el dia del entrenador no coincide
-				color(46);
-				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", eleccion);
-				pause();
-				color(30);
-				}
-				break;
-				
-			case 7:
-				if(Entrenadores.Dias[eleccion-1] != 0)
-					Turno.Dia = eleccion;
-				else
-				{
-				//Si el dia del entrenador no coincide
-				color(46);
-				printf("Error: El dia ingresado no coincide con el del entrenador\n");
-				printf("Dia ingresado(numero): %i\n", eleccion);
-				pause();
-				color(30);
-				}
-				break;
-			
-			default:
-				color(46);
-				printf("Error: Opcion ingresada no valida\n");
-				printf("Opcion: %i\n", eleccion);
-				pause();
-				color(30);
-				break;
-
+			printf("Se ha elegido exitosamente el dia\n");
+			break;
+		}	
+		else
+		{
+			color(46);
+			printf("Error: Opcion ingresada no valida\n");
+			printf("Opcion: %i\n", Turno.Dia);
+			pause();
+			color(30);
+		}
+		
+	}
+	
+	while(true)
+	{
+		printf("Ingresar la activdad que se ejerce en ese turno\n");
+		printf("1 = Zumba\n2 = Spining\n3 = Pilate\n");
+		scanf("%i", &Turno.Actividad);
+		if(1 <= Turno.Actividad && Turno.Actividad <= 3)
+			break;
+		else
+		{
+			color(46);
+			printf("Error: Opcion ingresada no valida\n");
+			printf("Opcion: %i\n", Turno.Actividad);
+			pause();
+			color(30);
 		}
 	}
-	fclose(SociosArch);
+	int eleccion, i;
+	pause();
 	Valido = false;
 	while(!Valido)
 	{
 		printf("A continuacion aqui estan los horarios\n");
-		printf("1. 8:00 A 10:00\n");
-		printf("2. 10:00 A 12:00\n");
-		printf("3. 01:00 A 03:00\n");
-		printf("4. 03:00 A 05:00\n");
-		printf("5. 05:00 A 07:00\n");
-		printf("6. 07:00 A 09:00\n");
-		printf("7. 09:00 A 11:00\n");
+		printf("1. 8:00 ~ 10:00\n"); 
+		printf("2. 10:00 ~ 12:00\n");
+		printf("3. 13:00 ~ 15:00\n");
+		printf("4. 15:00 ~ 17:00\n");
+		printf("5. 17:00 ~ 19:00\n");
+		printf("6. 19:00 ~ 21:00\n");
+		printf("7. 21:00 ~ 23:00\n");
 		printf("Ingrese su opcion: ");
 		scanf("%i", &eleccion);
+		system("CLS");
 		switch(eleccion)
 		{
 			case 1:
 				Turno.HoraInicial = 8;
-				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador);
-				if(!Valido)
-					return false;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador, Turno.Actividad);
 				break;
+				
 			case 2:
 				Turno.HoraInicial = 10;
-				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
-					return false;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador, Turno.Actividad);
 				break;
+				
 			case 3:
-				Turno.HoraInicial = 1;
-				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
-					return false;
+				Turno.HoraInicial = 13;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador, Turno.Actividad);
 				break;
+				
 			case 4:
-				Turno.HoraInicial = 3;
-				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
-					return false;
+				Turno.HoraInicial = 15;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador, Turno.Actividad);
 				break;
+				
 			case 5:
-				Turno.HoraInicial = 5;
-				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
-					return false;
+				Turno.HoraInicial = 17;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador, Turno.Actividad);
 				break;
+				
 			case 6:
-				Turno.HoraInicial = 7;
-				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
-					return false;
+				Turno.HoraInicial = 19;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador, Turno.Actividad);
 				break;
+				
 			case 7:
-				Turno.HoraInicial = 9;
-				if(!VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador));
-					return false;
+				Turno.HoraInicial = 21;
+				Valido = VerficiarRutina(Arch, Turno.Dia, Turno.HoraInicial, Turno.legajoEntrenador, Turno.Actividad);
 				break;
+				
 			default:
 				color(46);
 				printf("Error: Opcion ingresada no valida\n");

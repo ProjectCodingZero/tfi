@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "./library/Login.h"
+#include "./library/verificar.h"
 #include "./library/Register.h"
 #include "./library/library.h"
 #include "./library/listado.h"
@@ -154,7 +154,20 @@ void main()
          	
          case 12:
           	printf("Bienvenido al listado de los turnos\n");
-         	ListadoTurnos();
+         	Arch = fopen("Turnos.dat", "a+b");
+			if(Arch == NULL)
+         	{
+         		color(46);
+				printf("\nERROR :: NO EXISTE EL ARCHIVO \"Turnos.dat\"\n");
+				pause();
+				fclose(Arch);
+				color(07);
+				exit(EXIT_FAILURE);
+         	}
+         	else
+         	{
+         		ListadoTurnos(Arch);
+         	}
          	break;
          	
          case 13:

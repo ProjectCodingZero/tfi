@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "./library/Login.h"
 #include "./library/Register.h"
 #include "./library/library.h"
 #include "./library/listado.h"
+#include "./library/verificar.h"
 #define pause(); system("PAUSE"); system("CLS");
 #define color(c); system("COLOR " #c);
 //El color normal de la pantalla es 30

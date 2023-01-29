@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "./library/Login.h"
+#include "./library/verificar.h"
 #include "./library/Register.h"
 #include "./library/library.h"
 #include "./library/listado.h"
@@ -80,16 +80,22 @@ void main()
       printf("4.- Cerrar la aplicacion.\n\n\n");
       printf("Ingresar una opcion: ");
       scanf("%i", &Rta);
+      system("CLS");
       switch(Rta)
       {
          case 1:
+         	printf("Ha ingresado a la creacion de un socio\n")
+         	pause();
             CreationSocio();
             break;
          case 2:
-         	//-----
+         	printf("Ha ingresado al calculo del pago de un entrenador\n");
+         	calcularPago();
             break;
          case 3:
-         	//-----
+         	printf("Ha ingresado a quien es el entrenador con mayor carga\n")
+         	pause()
+         	EntMayorCarga();
          	break;
          case 4:
          	printf("\nA continuacion se cerrara la aplicacion\n");
