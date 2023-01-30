@@ -134,6 +134,7 @@ void FechaPago()
 				printf("Nombre de socio: %s\n", Socios.ApelYNom);
 				printf("Su fecha de pago es %02i/%02i\n", Socios.FechaIng.Dia, Socios.FechaIng.Mes);
 				verificar = true;
+				break;
 			}
 			fread(&Socios, sizeof(Socios), 1, SocioArch);
 		}
