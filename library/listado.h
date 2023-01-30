@@ -54,26 +54,34 @@ void ListadoSocios()
 						{
 							case 1:
 								printf("Lunes: ");
+								
 								break;
 							case 2:
 								printf("Martes: ");
+								
 								break;
 							case 3:
 								printf("Miercoles: ");
+								
 								break;
 							case 4:
 								printf("Jueves: ");
+								
 								break;
 							case 5:
 								printf("Viernes: ");
+								
 								break;
 							case 6:
 								printf("Sabado: ");
+								
 								break;
 							case 7:
 								printf("Domingo: ");
+								
 								break;
 							default:
+
 								break;
 						}
 						if(1 <= ElTurno.Dia && ElTurno.Dia <= 7)
@@ -294,6 +302,10 @@ void ListadoTurnos(FILE *Arch)
 
 void ListadoPorAct(int Actividad)
 {	
+	bool UnaVez1 = false;
+	bool UnaVez2 = false;
+	bool UnaVez3 = false;
+	bool Valido = false;
 	int horarios[] = {8, 10, 13, 15, 17, 19, 21};
 	int horario;
 	int legajoEntrenador;
@@ -332,36 +344,8 @@ void ListadoPorAct(int Actividad)
 		}
 		for(dia = 1; dia <= 7; dia++)
 		{
-			printf("Dia: ");
-			switch(dia)
-			{
-				case 1:
-					printf("Lunes\n");
-					break;
-				case 2:
-					printf("Martes\n");
-					break;
-				case 3:
-					printf("Miercoles\n");
-					break;
-				case 4:
-					printf("Jueves\n");
-					break;
-				case 5:
-					printf("Viernes\n");
-					break;
-				case 6:
-					printf("Sabado\n");
-					break;
-				case 7:
-					printf("Domingo\n");
-					break;
-				default:
-					break;
-			}
 			for(horario = 0; horario < 7; horario++)
 			{
-				printf("Horario: %02i:00 ~ %02i:00\n", horarios[horario], horarios[horario]+2);
 				fread(&Turno, sizeof(Turno), 1, TurnosArch);
 				while(!feof(TurnosArch))
 				{
@@ -370,15 +354,60 @@ void ListadoPorAct(int Actividad)
 					//El horario va desde AM a PM
 					if(Turno.Dia == dia && Turno.Actividad == Actividad && Turno.HoraInicial == horarios[horario])
 					{
+						if(!UnaVez1)
+						{
+							UnaVez1 = true;
+							printf("Dia: ");
+							switch(dia)
+							{
+								case 1:
+									printf("Lunes\n");
+									break;
+								case 2:
+									printf("Martes\n");
+									break;
+								case 3:
+									printf("Miercoles\n");
+									break;
+								case 4:
+									printf("Jueves\n");
+									break;
+								case 5:
+									printf("Viernes\n");
+									break;
+								case 6:
+									printf("Sabado\n");
+									break;
+								case 7:
+									printf("Domingo\n");
+									break;
+								default:
+									break;
+							}
+						}
+						if(!UnaVez2)
+						{
+							UnaVez2 = true;
+							printf("Horario: %02i:00 ~ %02i:00\n", horarios[horario], horarios[horario]+2);
+						}
 						printf("Numero de socio: %i\n", Turno.nroSocio);
 						legajoEntrenador = Turno.legajoEntrenador;
+						Valido = true;
 					}
+					
 					fread(&Turno, sizeof(Turno), 1, TurnosArch);
 				}
-				printf("Legajo del Entrenador: %i\n", legajoEntrenador);
-				pause();
+				if(Valido)
+					{
+						Valido = false;
+						printf("Legajo del Entrenador: %i\n", legajoEntrenador);
+						pause();
+					}
 				rewind(TurnosArch);
+				UnaVez2 = false;
 			}
+			UnaVez1 = true;
+
 		}
 	}
 }
