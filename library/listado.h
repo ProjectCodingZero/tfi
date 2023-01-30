@@ -402,11 +402,26 @@ void ListadoPorAct(int Actividad)
 						Valido = false;
 						printf("Legajo del Entrenador: %i\n", legajoEntrenador);
 						pause();
+						printf("Listado de actividad de: ");
+						switch(Actividad)
+						{
+							case 1:
+								printf("Zumba\n");
+								break;
+							case 2:
+								printf("Spining\n");
+								break;
+							case 3:
+								printf("Pilate\n");
+								break;
+							default: 
+								break;
+						}
 					}
 				rewind(TurnosArch);
 				UnaVez2 = false;
 			}
-			UnaVez1 = true;
+			UnaVez1 = false;
 
 		}
 	}
