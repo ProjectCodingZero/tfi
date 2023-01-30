@@ -102,6 +102,7 @@ void EntMayorCarga()
 	printf("El entrenador con mayor carga horaria es:\n");
 	printf("Nombre: %s\n Legajo: %i\n", ApelYNom, legajo);
 	printf("Carga Horaria: %i\n", MayorCargaHorario);
+	pause();
 }
 
 void FechaPago()
@@ -190,13 +191,45 @@ void calcularPago()
 		}
 		else
 		{
-			printf("Legajo: %i", LegajoEntrenador);
-			printf("Su pago: %i.00$", Pago);
+			printf("Legajo: %i\n", LegajoEntrenador);
+			printf("Su pago: %i.00$\n", Pago);
 		}
 		pause();
 	}
+	
 }
 
+void RegistrarGimnasia()
+{
+	system("CLS");
+	char Gimnasia[380];
+	FILE *arch = fopen("RutinaGimnasia.dat", "w+b");
+	printf("Ingrese la rutina de gimnasia\n");
+	gets(Gimnasia);
+	fclose(arch);
+	printf("Se ha registrado la rutina exitosamente\n");
+	pause();
+}
+
+void leerRutina()
+{
+	char Gimnasia[380];
+	FILE *arch = fopen("RutinaGimnasia.dat", "r+b");
+	if(arch == NULL)
+	{
+		color(46);
+		printf("\nERROR :: NO EXISTE EL ARCHIVO \"RutinaGimnasia.dat\"\n");
+		pause();
+		color(07);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		fread(&Gimnasia, sizeof(Gimnasia), 1, arch);
+		printf("%s\n", Gimnasia);
+		pause();
+	}
+}
 //El color normal de la pantalla es 30
 //El color error es 46
 //El color de salida por error es 07

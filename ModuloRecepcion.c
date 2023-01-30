@@ -127,8 +127,8 @@ void main()
 				printf("\nError: La opcion ingresada no existe\n");
 				pause();
 				color(30);
-           	 	break;
          	}
+         	break;
          case 6:
         	printf("\nA continuacion se cerrara la aplicacion\n");
          	pause();
