@@ -1,7 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include "./library/Register.h"
+#include "./library/register.h"
 #include "./library/library.h"
 #include "./library/listado.h"
 #include "./library/verificar.h"
@@ -80,7 +79,7 @@ void main()
       	printf("Las opciones son:\n\n");
      	printf("1.- Visualizar listado de Socios y actividad que desarrolla.\n");
       	printf("2.- Registrar rutinas de gimnasia.\n");
-      	printf("3.- Leer las rutinas de gimnasia")
+      	printf("3.- Leer las rutinas de gimnasia");
       	printf("4.- Cerrar la aplicacion.\n\n\n");
       	printf("Ingresar una opcion: ");
 		scanf("%i", &Rta);

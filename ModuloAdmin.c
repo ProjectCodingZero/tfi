@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "./library/verificar.h"
-#include "./library/Register.h"
+#include "./library/register.h"
 #include "./library/library.h"
 #include "./library/listado.h"
 #define pause(); system("PAUSE"); system("CLS");

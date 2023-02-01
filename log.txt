@@ -1,0 +1,245 @@
+commit 826dbbce1ef84379ea22b3d1615f57bcdfbf6801
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 22:09:58 2023 -0300
+
+    v0.92
+
+commit ca126d9d7b5eed87cdb16d05ea37f17cbf6cdd52
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 21:47:26 2023 -0300
+
+    v0.91
+
+commit 974e0ad4f96f2ce720abbb7c921efdb64c9a679a
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 21:45:15 2023 -0300
+
+    v0.9
+
+commit 61df3da9bd4e08c22ba8f23b0491592f3f1cafe5
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 21:21:24 2023 -0300
+
+    v0.8
+
+commit f57f31d393eac875abd8474ca41c17741e85d21a
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 20:53:31 2023 -0300
+
+    v0.6
+
+commit 2cc934e6000303132bcc0e939b36ed7aa231bae0
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 19:55:58 2023 -0300
+
+    v0.5
+
+commit 6edc7b345076052257d526ac3c729705d25d62e9
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 01:15:07 2023 -0300
+
+    v0.4848
+
+commit 8cde35159e2fde55b3e9631d097048199d1fab66
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 01:11:11 2023 -0300
+
+    v0.4847
+
+commit a18c5aab63ffd30f045e535994b6e4a9aeb27a79
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 01:00:41 2023 -0300
+
+    v0.4846
+
+commit 764be148777395ac0baf51cccac0407d533f34db
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:49:52 2023 -0300
+
+    v0.4845
+
+commit e1c85858f490365eda8a48d07b195ef83130b357
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:37:25 2023 -0300
+
+    v0.4844
+
+commit 4bfa3e22d52d7a47c16a855c2d9edf4e16696270
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:34:29 2023 -0300
+
+    v0.4843
+
+commit 1cff8ba273a67510a6f1245de5237174894ba80c
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:24:22 2023 -0300
+
+    v0.4842
+
+commit 6273208c8d2ea3b2ecd9d529374e1b7ff43fa514
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:21:21 2023 -0300
+
+    v0.484
+
+commit 1ae3192d462c1e616c1f98b9346fa7ebfd8a3c92
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:12:42 2023 -0300
+
+    v0.483
+
+commit e4cb7cd3144d972e90a24f8d89595df938a27561
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:02:34 2023 -0300
+
+    v0.482
+
+commit b6a1842923c6d328aa4711ffb52a8a2e17170567
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sun Jan 29 00:00:56 2023 -0300
+
+    v0.481
+
+commit da059e0bc42a3293e5241accd0516bf67555afee
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Sat Jan 28 23:52:30 2023 -0300
+
+    v0.48
+
+commit 8c7d5ae905bd11572175c58df945dd3ee0a5c2b5
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Thu Jan 26 23:56:15 2023 -0300
+
+    v0.47
+
+commit 1de483735d6569e00771907f93411d49cf834189
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:55:30 2023 -0300
+
+    v0.463
+
+commit 039701a3418c5d0308e0933bbc2da11db54321b4
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:41:15 2023 -0300
+
+    v0.462
+
+commit c2952cba459b41bcb96c2df8516128b843013c80
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:34:38 2023 -0300
+
+    v0.461
+
+commit 3774e068f354b75c2ce8dd00c57649fb2b5acca1
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:29:51 2023 -0300
+
+    v0.46
+
+commit ea807139d6fdf740f646d9c873037fac66be335c
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:24:49 2023 -0300
+
+    v0.45
+
+commit a36a8926e356b8edcb983c40069e76f01299228c
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:21:14 2023 -0300
+
+    v0.44
+
+commit 341d80167a3df954de1af1d7dcb1b4b7a4eef5ff
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:13:38 2023 -0300
+
+    v0.43
+
+commit 12d095b4155ff4d2dfdeee0c9b6fefcc8009ff11
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:09:22 2023 -0300
+
+    v0.42
+
+commit 5fd6a16b5dbd214bae5b225f9f457c1981c6419e
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Wed Jan 25 21:03:21 2023 -0300
+
+    v0.41
+
+commit 32800214b0b61de42f1bf6fb8b49f17decdcc4ed
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Tue Jan 24 14:53:09 2023 -0300
+
+    v0.4
+
+commit 26df1009a23b2bc675cd45dd4f2d1be4c0c2919e
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Tue Jan 24 02:26:26 2023 -0300
+
+    v0.3
+
+commit 5f3c2b162ba8747749a15d441d29a6bd601738be
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Tue Jan 24 01:19:40 2023 -0300
+
+    v0.3
+
+commit 2865774277fa1d1e7bb13d824a0e3f63d733e714
+Author: Mariano Encalada <cuentafeik1009@gmail.com>
+Date:   Mon Jan 23 23:30:02 2023 -0300
+
+    v2.02
+
+commit ad6a896e77f4dffadc40092e2f5e4a74874a7661
+Author: facha <cuentafeik1009@gmail.com>
+Date:   Sat Jan 21 03:57:50 2023 -0300
+
+    v2.01
+
+commit 1bb26154d81b73bd3eda11f775fa323dd0df893e
+Author: facha <cuentafeik1009@gmail.com>
+Date:   Tue Jan 17 02:34:13 2023 -0300
+
+    v0.2
+
+commit 1fd88869171fd55dbfec5729f2bb60cbc3b451e8
+Author: PoP <cuentafeik1009@gmail.com>
+Date:   Mon Jan 16 01:31:31 2023 -0300
+
+    v0.15
+
+commit b3c4c58304ab3ca3b86c9e3114d4d0cf301915c8
+Author: PoP <cuentafeik1009@gmail.com>
+Date:   Sat Jan 14 17:21:36 2023 -0300
+
+    d
+
+commit 9faf6502a29bfb10bfe456a873402eac60f940a7
+Author: PoP <cuentafeik1009@gmail.com>
+Date:   Sat Jan 14 17:20:29 2023 -0300
+
+    moved
+
+commit d810d6b3e57a80af8ef766f8c868d380a3f852a7
+Author: PoP <cuentafeik1009@gmail.com>
+Date:   Sat Jan 14 17:20:18 2023 -0300
+
+    v0.13
+
+commit d3c8955c67971df38486c71329a40272927976f6
+Author: PoP <cuentafeik1009@gmail.com>
+Date:   Fri Jan 13 12:57:58 2023 -0300
+
+    Signed-off-by: PoP <cuentafeik1009@gmail.com>
+
+commit 1203c6e790befe1a667c883fda582710aab5ba64
+Author: PoP <cuentafeik1009@gmail.com>
+Date:   Thu Jan 12 17:15:12 2023 -0300
+
+    v0.11
+
+commit 0f55d99444a05390b97117226e7bd67aca790d73
+Author: PoP <cuentafeik1009@gmail.com>
+Date:   Thu Jan 12 16:00:42 2023 -0300
+
+    devolop line
