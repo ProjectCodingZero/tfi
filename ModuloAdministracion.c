@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 #include "./library/verificar.h"
 #include "./library/Register.h"
 #include "./library/library.h"

@@ -125,7 +125,7 @@ void ListadoUsuariosAdmin(FILE *UserArch){
 	while(!feof(UserArch))
 	{
 		printf("\nNombre Completo: %s\n", User.ApelYNom);
-		printf("Usuario: %s\nContrasena:%i\n", User.usuario, User.contrasena);
+		printf("Usuario: %s\nContrasena:%s\n", User.usuario, User.contrasena);
 		pause();
 		fread(&User, sizeof(User), 1, UserArch);
 	}
